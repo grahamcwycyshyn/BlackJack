@@ -9,6 +9,7 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" />
 <link href="/styles.css" rel="stylesheet" />
+<script src="function.js"></script>
 </head>
 <body>
 	<div>
@@ -33,10 +34,10 @@
 		</div>
 		<div class="bets">
 		<button onclick="addFive()" id="addFive">5</button>
-		<button onclick="" id="addTwentyFive">25</button>
-		<button onclick="" id="addHundred">100</button>
-		<button onclick="" id="addFiveHundred">500</button>
-		<button onclick="" id="addThousand">1000</button>
+		<button onclick="addTwentyFive()" id="addTwentyFive">25</button>
+		<button onclick="addHundred()" id="addHundred">100</button>
+		<button onclick="addFiveHundred()" id="addFiveHundred">500</button>
+		<button onclick="addThousand()" id="addThousand">1000</button>
 		<span class="betAmount" id="betAmount">0</span>
 		</div>
 		
@@ -61,6 +62,5 @@
 			<p>Bankroll: ${ user.bankroll }</p>
 		</div>
 	</div>
-	<script src="fucntions.js"></script>
 </body>
 </html>

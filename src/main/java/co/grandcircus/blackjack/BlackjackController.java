@@ -72,15 +72,15 @@ public class BlackjackController {
 		return new ModelAndView("redirect:/");
 	}
 		
-	@RequestMapping("/bet")
-	public ModelAndView bet(@RequestParam(value="bankroll", required=true) Long bet) {
-		ModelAndView m = new ModelAndView("index");
-		Long id = (long) 1;
-		User user = userDao.findById(id).get();
-		Hand hand = handDao.findTopByOrderByIdDesc();
-		user.setBankroll(user.getBankroll() - bet);
-		userDao.save(user);
-		return m;
-	}
+//	@RequestMapping("/bet")
+//	public ModelAndView bet(@RequestParam(value="bankroll", required=true) Long bet) {
+//		ModelAndView m = new ModelAndView("index");
+//		Long id = (long) 1;
+//		User user = userDao.findById(id).get();
+//		Hand hand = handDao.findTopByOrderByIdDesc();
+//		user.setBankroll(user.getBankroll() - bet);
+//		userDao.save(user);
+//		return m;
+//	}
 		
 }

@@ -29,13 +29,13 @@ public class ApiService {
 	}
 	
 	public Card getCard(Deck deck) {
-		String url = "https://deckofcardsapi.com/api/deck/" + deck.getDeck_id() + "/draw/?count=1";
+		String url = "https://deckofcardsapi.com/api/deck/" + deck.getId() + "/draw/?count=1";
 		Card card = restTemplate.getForObject(url, Card.class);
 		return card;
 	}
 	
 	public Deck shuffle(Deck deck) {
-		String url = "https://deckofcardsapi.com/api/deck/" + deck.getDeck_id() + "/shuffle/";
+		String url = "https://deckofcardsapi.com/api/deck/" + deck.getId() + "/shuffle/";
 		Deck shuffledDeck = restTemplate.getForObject(url, Deck.class);
 		return shuffledDeck;
 	}
