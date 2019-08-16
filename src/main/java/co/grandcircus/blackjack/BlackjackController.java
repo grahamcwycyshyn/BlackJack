@@ -69,7 +69,7 @@ public class BlackjackController {
 	}
 	@RequestMapping("/deal")
 	public ModelAndView deal() {
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:/game");
 	}
 		
 //	@RequestMapping("/bet")

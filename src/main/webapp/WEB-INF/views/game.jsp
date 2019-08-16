@@ -39,9 +39,12 @@
 		<button onclick="addHundred()" id="addHundred">100</button>
 		<button onclick="addFiveHundred()" id="addFiveHundred">500</button>
 		<button onclick="addThousand()" id="addThousand">1000</button>
-		<span class="betAmount" id="betAmount">0</span>
+		<span class="betAmount" id="betAmount">5</span>
+		<form action="/deal" id="betDeal">
+			<input type="hidden" value="5">
+			<button type="submit" value="Submit">Submit</button>
+		</form> 
 		</div>
-		
 		<div class="inside">
 			<table id="playerHand">
 				<thead>
