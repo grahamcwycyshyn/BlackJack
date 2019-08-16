@@ -29,6 +29,10 @@ public class Deck {
 	public void setRemaining(Integer remaining) {
 		this.remaining = remaining;
 	}
+	@Override
+	public String toString() {
+		return "Deck [id=" + id + ", remaining=" + remaining + "]";
+	}
 	
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.blackjack.dao.HandRepository;
@@ -35,24 +36,26 @@ public class BlackjackController {
 
 
 	@RequestMapping("/")
-	public ModelAndView index() {
+	public ModelAndView index(HttpSession session) {
 		Deck deck = a.getDeck();
 		ModelAndView m = new ModelAndView("index");
 		m.addObject("deck", deck);
+		session.setAttribute("deck", deck);
+		System.out.println(session.getAttribute("deck"));
 		return m;
 	}
 	
 	@RequestMapping("/game")
 	public ModelAndView game(
-			@RequestParam(value="id", required=true) String id,  HttpSession session) {
+			@RequestParam(value="id", required=false) String id,
+			@SessionAttribute(name="deck", required = false)Deck deck, HttpSession session) {
 		Long i = (long) 1;
 		User user = userDao.findById(i).get();
-		Deck deck = new Deck();
-		deck.setId(id);
 		ModelAndView m = new ModelAndView("game");
 		m.addObject("user", user);
 		m.addObject("deck", deck);
 		session.setAttribute("deck", deck);
+		System.out.println(session.getAttribute("deck"));
 		return m;
 	}
 	
@@ -75,18 +78,17 @@ public class BlackjackController {
 		return new ModelAndView("login-form");
 	}
 	@RequestMapping("/deal")
-	public ModelAndView deal(@RequestParam(value="id") String id,
-			HttpSession session) {
-		
+	public ModelAndView deal(HttpSession session, @SessionAttribute(name="deck", required = false)Deck deck) {
+		System.out.println(deck.getId());
 		List<Card> dealerHand = new ArrayList<>();
-		dealerHand.add(a.getCard(id));
-		dealerHand.add(a.getCard(id));
+		dealerHand.add(a.getCard(deck.getId()));
+		dealerHand.add(a.getCard(deck.getId()));
 		List<Card> userHand = new ArrayList<>();
-		userHand.add(a.getCard(id));
-		userHand.add(a.getCard(id));
+		userHand.add(a.getCard(deck.getId()));
+		userHand.add(a.getCard(deck.getId()));
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("dealerHand", dealerHand);
-		return new ModelAndView("game");
+		return new ModelAndView("redirect:/game");
 	}
 		
 //	@RequestMapping("/bet")
