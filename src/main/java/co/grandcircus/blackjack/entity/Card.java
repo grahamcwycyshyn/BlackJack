@@ -90,6 +90,23 @@ public class Card {
 			return true;
 		}
 	}
+	public static boolean canSplit(List<Card> hand) {
+		if(hand.size() > 2) {
+			return false;
+		}else if(hand.get(0).getValue().equalsIgnoreCase(hand.get(1).getValue()) ) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public static boolean canDouble(List<Card> hand) {
+		if(hand.size() > 2) {
+			return false;
+		}else {
+			return true;
+		}
+		
+	}
 	
 }
 
