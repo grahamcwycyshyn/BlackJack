@@ -34,6 +34,8 @@ public class BlackjackController {
 	@RequestMapping("/login-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
 		
+		
+		
 		dao.save(user);
 		
 		session.setAttribute("user", user);
