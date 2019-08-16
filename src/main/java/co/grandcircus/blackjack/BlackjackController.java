@@ -57,6 +57,7 @@ public class BlackjackController {
 		ModelAndView m = new ModelAndView("index");
 		Long id = (long) 1;
 		User user = userDao.findById(id).get();
+		Hand hand = handDao.findTopByOrder;
 		user.setBankroll(user.getBankroll() - bet);
 		userDao.save(user);
 		return m;
