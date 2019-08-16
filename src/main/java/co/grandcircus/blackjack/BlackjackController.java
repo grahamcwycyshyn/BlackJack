@@ -23,7 +23,7 @@ public class BlackjackController {
 	ApiService a;
 	
 	@Autowired
-	private UserRepository dao;
+	private UserRepository userDao;
 
 
 	@RequestMapping("/login")
@@ -51,5 +51,16 @@ public class BlackjackController {
 		return new ModelAndView("redirect:/");
 	}
 		
+	@RequestMapping("/bet")
+	public ModelAndView bet(@RequestParam(value="bankroll", required=true) Long bet) {
+		ModelAndView m = new ModelAndView("index");
+		Long id = (long) 1;
+		User user = dao.findById(id).get();
+		user.setBankroll(user.getBankroll() - bet);
+		dao.save(user);
+		
+		
+		
+	}
 		
 }
