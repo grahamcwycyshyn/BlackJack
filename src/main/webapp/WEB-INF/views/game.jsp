@@ -9,6 +9,7 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" />
 <link href="/styles.css" rel="stylesheet" />
+<script src="functions.js"></script>
 </head>
 <body>
 	<div>
@@ -61,6 +62,6 @@
 			<p>Bankroll: ${ user.bankroll }</p>
 		</div>
 	</div>
-	<script src="fucntions.js"></script>
+	
 </body>
 </html>
