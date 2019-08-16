@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.blackjack.dao.HandRepository;
 import co.grandcircus.blackjack.dao.UserRepository;
+import co.grandcircus.blackjack.entity.Deck;
+import co.grandcircus.blackjack.entity.Hand;
 import co.grandcircus.blackjack.entity.User;
 
 
@@ -29,6 +31,24 @@ public class BlackjackController {
 	HandRepository handDao;
 
 
+	@RequestMapping("/")
+	public ModelAndView index() {
+		Deck deck = a.getDeck();
+		ModelAndView m = new ModelAndView("index");
+		m.addObject("deck", deck);
+		return m;
+	}
+	
+	@RequestMapping("/game")
+	public ModelAndView game(
+			@RequestParam(value="id", required=true) String id) {
+		Long i = (long) 1;
+		User user = userDao.findById(i).get();
+		ModelAndView m = new ModelAndView("game");
+		m.addObject("user", user);
+		return m;
+	}
+	
 
 	@RequestMapping("/signup")
 	public ModelAndView showSignup() {
@@ -57,7 +77,7 @@ public class BlackjackController {
 		ModelAndView m = new ModelAndView("index");
 		Long id = (long) 1;
 		User user = userDao.findById(id).get();
-		Hand hand = handDao.findTopByOrder;
+		Hand hand = handDao.findTopByOrderByIdDesc();
 		user.setBankroll(user.getBankroll() - bet);
 		userDao.save(user);
 		return m;

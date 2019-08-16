@@ -13,6 +13,7 @@ import javax.persistence.Table;
 public class Hand {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Long handId;
 	private Long userId;
 	private String card;
