@@ -243,7 +243,7 @@ public class BlackjackApplicationTests {
 		assertEquals(false, Card.bust(hand4));
 	}
 	@Test
-	public void bust() {
+	public void canHit() {
 		ArrayList<Card> hand = new ArrayList<Card>();
 		Card c1 = new Card("7");
 		Card c2 = new Card("ACE");
