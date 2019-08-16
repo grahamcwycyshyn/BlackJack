@@ -136,4 +136,5 @@ public class BlackjackApplicationTests {
 		assertEquals(false, Card.isValueSoft(hand4));
 	}
 
+
 }
