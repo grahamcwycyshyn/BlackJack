@@ -1,5 +1,8 @@
 package co.grandcircus.blackjack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.blackjack.dao.HandRepository;
 import co.grandcircus.blackjack.dao.UserRepository;
+import co.grandcircus.blackjack.entity.Card;
 import co.grandcircus.blackjack.entity.Deck;
-import co.grandcircus.blackjack.entity.Hand;
 import co.grandcircus.blackjack.entity.User;
 
 
@@ -68,7 +71,17 @@ public class BlackjackController {
 		return new ModelAndView("login-form");
 	}
 	@RequestMapping("/deal")
-	public ModelAndView deal() {
+	public ModelAndView deal(@RequestParam(value="id") String id,
+			HttpSession session) {
+		
+		List<Card> dealerHand = new ArrayList<>();
+		dealerHand.add(a.getCard(id));
+		dealerHand.add(a.getCard(id));
+		List<Card> userHand = new ArrayList<>();
+		userHand.add(a.getCard(id));
+		userHand.add(a.getCard(id));
+		session.setAttribute("userHand", userHand);
+		session.setAttribute("dealerHand", dealerHand);
 		return new ModelAndView("redirect:/game");
 	}
 		

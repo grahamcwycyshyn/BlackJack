@@ -29,5 +29,7 @@ public class Deck {
 	public void setRemaining(Integer remaining) {
 		this.remaining = remaining;
 	}
+	
+	
 }
 

@@ -28,8 +28,8 @@ public class ApiService {
 		return deck;
 	}
 	
-	public Card getCard(Deck deck) {
-		String url = "https://deckofcardsapi.com/api/deck/" + deck.getId() + "/draw/?count=1";
+	public Card getCard(String id) {
+		String url = "https://deckofcardsapi.com/api/deck/" + id + "/draw/?count=1";
 		Card card = restTemplate.getForObject(url, Card.class);
 		return card;
 	}
