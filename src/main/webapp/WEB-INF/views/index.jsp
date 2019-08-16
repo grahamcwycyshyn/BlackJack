@@ -31,7 +31,9 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="inside"></div>
+		<div class="inside">
+		<a href="/deal"><button type="button" class="btn btn-primary btn-lg">Deal</button></a>
+		</div>
 		<div class="inside">
 			<table id="playerHand">
 				<thead>

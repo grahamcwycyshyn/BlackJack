@@ -7,12 +7,3 @@ div {
 	border:solid 1px black;
 }
 
-.inside {
-	width:90%
-	height: 90%
-}
-
-table {
-	display:inline-block;
-	border: solid 1px red;
-}
