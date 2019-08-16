@@ -32,11 +32,12 @@
 			</table>
 		</div>
 		<div class="bets">
-		<button onclick="">5</button>
-		<button onclick="">25</button>
-		<button onclick="">100</button>
-		<button onclick="">500</button>
-		<button onclick="">1000</button>
+		<button onclick="addFive()" id="addFive">5</button>
+		<button onclick="" id="addTwentyFive">25</button>
+		<button onclick="" id="addHundred">100</button>
+		<button onclick="" id="addFiveHundred">500</button>
+		<button onclick="" id="addThousand">1000</button>
+		<span class="betAmount" id="betAmount">0</span>
 		</div>
 		
 		<div class="inside">
@@ -60,5 +61,6 @@
 			<p>Bankroll: ${ user.bankroll }</p>
 		</div>
 	</div>
+	<script src="fucntions.js"></script>
 </body>
 </html>
