@@ -10,6 +10,7 @@
 	href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" />
 <link href="/styles.css" rel="stylesheet" />
 <script src="function.js"></script>
+
 </head>
 <body>
 	<div>
