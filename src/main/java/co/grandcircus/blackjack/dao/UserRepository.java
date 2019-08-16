@@ -7,5 +7,4 @@ import co.grandcircus.blackjack.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	
-
 }

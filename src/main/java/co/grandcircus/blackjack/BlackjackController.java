@@ -26,26 +26,28 @@ public class BlackjackController {
 	private UserRepository dao;
 
 
-	@RequestMapping("/signup")
+	@RequestMapping("/login")
 	public ModelAndView showSignup() {
-		return new ModelAndView("signup-form");
+		return new ModelAndView("login-form");
 	}
 	
-	@RequestMapping("/signup-confirmation")
+	@RequestMapping("/login-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
 		
 		dao.save(user);
 		
 		session.setAttribute("user", user);
 		
-		ModelAndView mv = new ModelAndView("thanks");
+		ModelAndView mv = new ModelAndView("welcome");
 		return mv;
 	}
 	
-	@RequestMapping("/login")
-		public ModelAndView showLogin() {
-			return new ModelAndView("login-form");
-		}
+	@RequestMapping("/logout")
+	public ModelAndView logout(HttpSession session) {
+		session.invalidate();
+		
+		return new ModelAndView("redirect:/");
+	}
 		
 		
 }
