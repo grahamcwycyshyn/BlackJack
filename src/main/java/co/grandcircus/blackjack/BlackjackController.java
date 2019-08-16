@@ -79,13 +79,15 @@ public class BlackjackController {
 	}
 	@RequestMapping("/deal")
 	public ModelAndView deal(HttpSession session, @SessionAttribute(name="deck", required = false)Deck deck) {
-		System.out.println(deck.getId());
+		System.out.println(session.getAttribute("deck"));
+		Object d = session.getAttribute("deck");
+		System.out.println(d);
 		List<Card> dealerHand = new ArrayList<>();
-		dealerHand.add(a.getCard(deck.getId()));
-		dealerHand.add(a.getCard(deck.getId()));
+//		dealerHand.add(a.getCard(deck.getId()));
+//		dealerHand.add(a.getCard(deck.getId()));
 		List<Card> userHand = new ArrayList<>();
-		userHand.add(a.getCard(deck.getId()));
-		userHand.add(a.getCard(deck.getId()));
+//		userHand.add(a.getCard(deck.getId()));
+//		userHand.add(a.getCard(deck.getId()));
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("dealerHand", dealerHand);
 		return new ModelAndView("redirect:/game");
