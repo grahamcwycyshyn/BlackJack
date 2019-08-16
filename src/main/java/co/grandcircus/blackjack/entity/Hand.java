@@ -15,8 +15,14 @@ public class Hand {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long handId;
 	private Long userId;
-	private List<Card> cards;
+	private String card;
 	
+	public String getCard() {
+		return card;
+	}
+	public void setCard(String card) {
+		this.card = card;
+	}
 	public Long getHandId() {
 		return handId;
 	}
@@ -29,11 +35,6 @@ public class Hand {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public List<Card> getCards() {
-		return cards;
-	}
-	public void setCards(List<Card> cards) {
-		this.cards = cards;
-	}
+
 	
 }
