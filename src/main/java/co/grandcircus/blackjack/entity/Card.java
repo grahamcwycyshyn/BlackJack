@@ -107,6 +107,20 @@ public class Card {
 		}
 		
 	}
+	public static boolean bust(List<Card> hand) {
+		if(Card.getHandValue(hand) > 21) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public static boolean canHit(List<Card> hand) {
+		if(!Card.bust(hand)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
 	
 }
 
