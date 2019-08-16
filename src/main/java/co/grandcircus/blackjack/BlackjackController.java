@@ -15,7 +15,7 @@ import co.grandcircus.blackjack.entity.User;
 
 
 
-
+//Note: need to change bet method when pulling in multiple users, currently only takes in one user
 @RestController
 public class BlackjackController {
 	
@@ -36,7 +36,7 @@ public class BlackjackController {
 		
 		
 		
-		dao.save(user);
+		userDao.save(user);
 		
 		session.setAttribute("user", user);
 		
@@ -55,9 +55,9 @@ public class BlackjackController {
 	public ModelAndView bet(@RequestParam(value="bankroll", required=true) Long bet) {
 		ModelAndView m = new ModelAndView("index");
 		Long id = (long) 1;
-		User user = dao.findById(id).get();
+		User user = userDao.findById(id).get();
 		user.setBankroll(user.getBankroll() - bet);
-		dao.save(user);
+		userDao.save(user);
 		
 		
 		
