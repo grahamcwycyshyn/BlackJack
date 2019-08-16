@@ -8,6 +8,12 @@ public class Card {
 	private String image;
 	private String suit;
 	
+	public Card() {}
+	
+	public Card(String value) {
+		super();
+		this.value = value;
+	}
 	public String getValue() {
 		return value;
 	}
@@ -26,7 +32,7 @@ public class Card {
 	public void setSuit(String suit) {
 		this.suit = suit;
 	}
-	public int getHandValue(List<Card> hand) {
+	public static int getHandValue(List<Card> hand) {
 		int score = 0;
 		int aceCount = acesInHand(hand);
 		for(int i = 0; i < hand.size(); i++) {
@@ -39,13 +45,13 @@ public class Card {
 			}
 		}
 		for(int i = aceCount; i > 0; i--) {
-			
+			if(score + (i * 10) < 22) {
+				score += 10;
+			}
 		}
-		
-		
 		return score;
 	}
-	public int acesInHand(List<Card> hand) {
+	public static int acesInHand(List<Card> hand) {
 		int aceCount = 0;
 		for(int i = 0; i < hand.size(); i++) {
 			if(hand.get(i).getValue().equalsIgnoreCase("ACE")) {
@@ -53,6 +59,36 @@ public class Card {
 			}
 		}
 		return aceCount;
+	}
+	public static boolean isValueSoft(List<Card> hand) {
+		int score = 0;
+		int aceCount = acesInHand(hand);
+		for(int i = 0; i < hand.size(); i++) {
+			if(hand.get(i).getValue().equalsIgnoreCase("ACE")) {
+				score += 1;
+			} else if(hand.get(i).getValue().equalsIgnoreCase("KING")||hand.get(i).getValue().equalsIgnoreCase("QUEEN")||hand.get(i).getValue().equalsIgnoreCase("JACK")) {
+				score += 10;
+			} else {
+				score += Integer.parseInt(hand.get(i).getValue());
+			}
+		}
+		for(int i = aceCount; i > 0; i--) {
+			if(score + (i * 10) < 22) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public static boolean dealerHit(List<Card> hand) {
+		boolean isSoft = isValueSoft(hand);
+		int score = getHandValue(hand);
+		if(isSoft && score < 18) {
+			return true;
+		}else if(score < 17) {
+			return true;
+		}else {			
+			return true;
+		}
 	}
 	
 }
