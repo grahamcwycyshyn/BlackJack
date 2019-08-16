@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import co.grandcircus.blackjack.ApiService;
+import co.grandcircus.blackjack.dao.UserRepository;
 import co.grandcircus.blackjack.entity.User;
+
 
 
 
@@ -19,6 +21,9 @@ public class BlackjackController {
 	
 	@Autowired
 	ApiService a;
+	
+	@Autowired
+	private UserRepository dao;
 
 
 	@RequestMapping("/signup")
@@ -29,7 +34,7 @@ public class BlackjackController {
 	@RequestMapping("/signup-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
 		
-		//dao.save(user);
+		dao.save(user);
 		
 		session.setAttribute("user", user);
 		
