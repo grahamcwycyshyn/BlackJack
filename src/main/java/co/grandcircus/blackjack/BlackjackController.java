@@ -44,11 +44,15 @@ public class BlackjackController {
 	
 	@RequestMapping("/game")
 	public ModelAndView game(
-			@RequestParam(value="id", required=true) String id) {
+			@RequestParam(value="id", required=true) String id,  HttpSession session) {
 		Long i = (long) 1;
 		User user = userDao.findById(i).get();
+		Deck deck = new Deck();
+		deck.setId(id);
 		ModelAndView m = new ModelAndView("game");
 		m.addObject("user", user);
+		m.addObject("deck", deck);
+		session.setAttribute("deck", deck);
 		return m;
 	}
 	
@@ -82,7 +86,7 @@ public class BlackjackController {
 		userHand.add(a.getCard(id));
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("dealerHand", dealerHand);
-		return new ModelAndView("redirect:/game");
+		return new ModelAndView("game");
 	}
 		
 //	@RequestMapping("/bet")
