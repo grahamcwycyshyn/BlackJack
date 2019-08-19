@@ -17,6 +17,7 @@ import co.grandcircus.blackjack.dao.UserRepository;
 import co.grandcircus.blackjack.entity.Card;
 import co.grandcircus.blackjack.entity.Deck;
 import co.grandcircus.blackjack.entity.User;
+import co.grandcircus.blackjack.entity.Hand;
 
 
 
@@ -73,10 +74,10 @@ public class BlackjackController {
 		return mv;
 	}
 	
-	@RequestMapping("/login")
-	public ModelAndView showLogin() {
-		return new ModelAndView("login-form");
-	}
+//	@RequestMapping("/login")
+//	public ModelAndView showLogin() {
+//		return new ModelAndView("login-form");
+//	}
 	@RequestMapping("/deal")
 	public ModelAndView deal(HttpSession session, @SessionAttribute(name="deck", required = false)Deck deck) {
 		System.out.println(session.getAttribute("deck"));
@@ -93,6 +94,7 @@ public class BlackjackController {
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("dealerHand", dealerHand);
 		return new ModelAndView("redirect:/game");
+
 	}
 	
 	@RequestMapping("/hit")
@@ -103,6 +105,9 @@ public class BlackjackController {
 		userHand.add(a.getCard(deck.getId()));
 		session.setAttribute("userHand", userHand);
 		return new ModelAndView("redirect:/game");
+
+		
+
 	}
 		
 //	@RequestMapping("/bet")
@@ -115,5 +120,10 @@ public class BlackjackController {
 //		userDao.save(user);
 //		return m;
 //	}
+	
+	@RequestMapping("/stay)
+	public ModelAndViews stay(HttpSession session, @SessionAttribute(name="userHand", required = true) Hand hand) {
+		System.out.println(session.getAttribute("userHand"));
+	}
 		
 }
