@@ -30,7 +30,8 @@ public class ApiService {
 	
 	public Card getCard(String id) {
 		String url = "https://deckofcardsapi.com/api/deck/" + id + "/draw/?count=1";
-		Card card = restTemplate.getForObject(url, Card.class);
+		Deck deck = restTemplate.getForObject(url, Deck.class);
+		Card card = deck.getCards().get(0);
 		return card;
 	}
 	

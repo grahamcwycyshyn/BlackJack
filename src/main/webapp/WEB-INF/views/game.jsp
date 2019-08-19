@@ -49,7 +49,7 @@
 			<table id="playerHand">
 				<thead>
 					<tr>
-						<c:forEach var="each" items="${card}">
+						<c:forEach var="each" items="${userHand}">
 							<th><img src="${each.image }" /></th>
 						</c:forEach>
 						<th>Value</th>
@@ -57,7 +57,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<c:forEach var="each" items="${card}">
+						<c:forEach var="each" items="${userHand}">
 							<td>${each.value }</td>
 						</c:forEach>
 					</tr>
