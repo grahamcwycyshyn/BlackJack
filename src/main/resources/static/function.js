@@ -6,7 +6,7 @@ function addFive() {
 	betAmount += 5;
 	betDisplay.innerText = betAmount;
 	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
+	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
 }
 
 function addTwentyFive() {
@@ -14,7 +14,7 @@ function addTwentyFive() {
 	betAmount += 25;
 	betDisplay.innerText = betAmount;
 	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
+	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
 }
 
 
@@ -23,7 +23,7 @@ function addHundred() {
 	betAmount += 100;
 	betDisplay.innerText = betAmount;
 	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
+	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
 }
 
 
@@ -32,7 +32,7 @@ function addFiveHundred() {
 	betAmount += 500;
 	betDisplay.innerText = betAmount;
 	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
+	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
 }
 
 
@@ -41,5 +41,5 @@ function addThousand() {
 	betAmount += 1000;
 	betDisplay.innerText = betAmount;
 	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
+	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Submit</button>";
 }

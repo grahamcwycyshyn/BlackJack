@@ -41,7 +41,7 @@
 		<button onclick="addThousand()" id="addThousand">1000</button>
 		<span class="betAmount" id="betAmount">5</span>
 		<form action="/deal" id="betDeal">
-			<input type="hidden" value="5">
+			<input type="hidden" name="betDeal" value="5">
 			<button type="submit" value="Submit">Deal</button>
 		</form> 
 		</div>

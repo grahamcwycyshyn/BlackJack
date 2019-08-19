@@ -79,7 +79,10 @@ public class BlackjackController {
 //		return new ModelAndView("login-form");
 //	}
 	@RequestMapping("/deal")
-	public ModelAndView deal(HttpSession session, @SessionAttribute(name="deck", required = false)Deck deck) {
+	public ModelAndView deal(HttpSession session, 
+			@SessionAttribute(name="deck", required = false)Deck deck,
+			@RequestParam("betDeal") Integer bet) {
+		System.out.println(bet);
 		System.out.println(session.getAttribute("deck"));
 		Object d = session.getAttribute("deck");
 		System.out.println(d);
@@ -111,6 +114,7 @@ public class BlackjackController {
 		session.setAttribute("userHandValue", card.getHandValue(userHand));
 		} else {
 			session.setAttribute("userHandValue", "BUST!");
+			
 		}
 		return new ModelAndView("redirect:/game");
 
