@@ -82,7 +82,7 @@ public class BlackjackController {
 	public ModelAndView deal(HttpSession session, 
 			@SessionAttribute(name="deck", required = false)Deck deck,
 			@RequestParam("betDeal") Integer bet) {
-		System.out.println(bet);
+		session.setAttribute("bet", bet);
 		System.out.println(session.getAttribute("deck"));
 		Object d = session.getAttribute("deck");
 		System.out.println(d);
@@ -106,7 +106,8 @@ public class BlackjackController {
 	public ModelAndView hit(HttpSession session,
 			@SessionAttribute(name="deck") Deck deck,
 			@SessionAttribute(name="userHand") List<Card> userHand,
-			@SessionAttribute(name="dealerHand") List<Card> dealerHand) {
+			@SessionAttribute(name="dealerHand") List<Card> dealerHand,
+			@SessionAttribute(name="bet") Integer bet) {
 		userHand.add(a.getCard(deck.getId()));
 		Card card = new Card();
 		session.setAttribute("userHand", userHand);
@@ -114,7 +115,11 @@ public class BlackjackController {
 		session.setAttribute("userHandValue", card.getHandValue(userHand));
 		} else {
 			session.setAttribute("userHandValue", "BUST!");
-			
+			Long id = (long) 1;
+			User user = userDao.findById(id).get();
+			user.setBankroll(user.getBankroll() - bet);
+			userDao.save(user);
+			session.setAttribute("user", user);
 		}
 		return new ModelAndView("redirect:/game");
 
