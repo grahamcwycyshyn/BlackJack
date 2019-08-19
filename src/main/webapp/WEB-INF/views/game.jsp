@@ -52,14 +52,13 @@
 						<c:forEach var="each" items="${userHand}">
 							<th><img src="${each.image }" /></th>
 						</c:forEach>
-						<th>Value</th>
+						
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<c:forEach var="each" items="${userHand}">
-							<td>${each.value }</td>
-						</c:forEach>
+							<td>Value: ${userHandValue}</td>
+						
 					</tr>
 				</tbody>
 			</table>

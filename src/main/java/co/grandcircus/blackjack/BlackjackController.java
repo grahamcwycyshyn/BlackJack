@@ -91,7 +91,9 @@ public class BlackjackController {
 		List<Card> userHand = new ArrayList<>();
 		userHand.add(a.getCard(deck.getId()));
 		userHand.add(a.getCard(deck.getId()));
+		Card card = new Card();
 		session.setAttribute("userHand", userHand);
+		session.setAttribute("userHandValue", card.getHandValue(userHand));
 		session.setAttribute("dealerHand", dealerHand);
 		return new ModelAndView("redirect:/game");
 
@@ -103,7 +105,13 @@ public class BlackjackController {
 			@SessionAttribute(name="userHand") List<Card> userHand,
 			@SessionAttribute(name="dealerHand") List<Card> dealerHand) {
 		userHand.add(a.getCard(deck.getId()));
+		Card card = new Card();
 		session.setAttribute("userHand", userHand);
+		if(card.bust(userHand) == false) {
+		session.setAttribute("userHandValue", card.getHandValue(userHand));
+		} else {
+			session.setAttribute("userHandValue", "BUST!");
+		}
 		return new ModelAndView("redirect:/game");
 
 		
