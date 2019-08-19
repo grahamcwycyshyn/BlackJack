@@ -63,6 +63,7 @@
 					</tr>
 				</tbody>
 			</table>
+			<form action="/hit"><button type="submit">Hit</button></form>
 			<p>Bankroll: ${ user.bankroll }</p>
 		</div>
 	</div>
