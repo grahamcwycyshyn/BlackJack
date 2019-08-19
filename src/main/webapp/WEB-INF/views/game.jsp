@@ -42,7 +42,7 @@
 		<span class="betAmount" id="betAmount">5</span>
 		<form action="/deal" id="betDeal">
 			<input type="hidden" value="5">
-			<button type="submit" value="Submit">Submit</button>
+			<button type="submit" value="Submit">Deal</button>
 		</form> 
 		</div>
 		<div class="inside">
@@ -64,6 +64,7 @@
 				</tbody>
 			</table>
 			<form action="/hit"><button type="submit">Hit</button></form>
+			<form action="/stay"><button type="submit">Stay</button></form>
 			<p>Bankroll: ${ user.bankroll }</p>
 		</div>
 	</div>

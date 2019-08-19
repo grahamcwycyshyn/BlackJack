@@ -109,6 +109,16 @@ public class BlackjackController {
 		
 
 	}
+	
+	@RequestMapping("/stay")
+			public ModelAndView stay(HttpSession session,
+					@SessionAttribute(name="userHand") List<Card> userHand,
+					@SessionAttribute(name= "dealerhand") List<Card> dealerHand,
+					@SessionAttribute(name="deck") Deck deck){
+				userHand.add(a.getCard(deck.getId()));
+				session.setAttribute("userHand", userHand);
+				return new ModelAndView("redirct:/game");
+			}
 		
 //	@RequestMapping("/bet")
 //	public ModelAndView bet(@RequestParam(value="bankroll", required=true) Long bet) {
@@ -121,9 +131,6 @@ public class BlackjackController {
 //		return m;
 //	}
 	
-	@RequestMapping("/stay)
-	public ModelAndViews stay(HttpSession session, @SessionAttribute(name="userHand", required = true) Hand hand) {
-		System.out.println(session.getAttribute("userHand"));
-	}
+	
 		
 }
