@@ -18,7 +18,7 @@
 			<table id="dealerHand">
 				<thead>
 					<tr>
-						<c:forEach var="each" items="${card}">
+						<c:forEach var="each" items="${dealerHand}">
 							<th><img src="${each.image }" /></th>
 						</c:forEach>
 						<th>Value</th>
@@ -26,7 +26,7 @@
 				</thead>
 				<tbody>
 					<tr>
-						<c:forEach var="each" items="${card}">
+						<c:forEach var="each" items="${dealerHand}">
 							<td>${each.value }</td>
 						</c:forEach>
 					</tr>

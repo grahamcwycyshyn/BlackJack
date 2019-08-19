@@ -1,11 +1,16 @@
 package co.grandcircus.blackjack.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Deck {
+public class Deck implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@JsonProperty("deck_id")
 	private String id;
 	private List<Card> cards;

@@ -7,3 +7,11 @@ div {
 	border:solid 1px black;
 }
 
+img {
+	width: 100%;
+	hieght: auto;
+}
+
+th{
+	width: 75px;
+}
