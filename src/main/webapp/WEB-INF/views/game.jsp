@@ -19,10 +19,10 @@
 				<thead>
 					<tr>
 						<c:forEach items="${dealerHand}" var="item" varStatus="loop">
-						    <c:if test="${loop.first && stay == 0}">
+						    <c:if test="${loop.first && stay != 5}">
 						        <th><img class="backside" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSVhzvnISkrvxN3Mg7uFbwKSmzg-EzcfNjnKKb5Sf90Rm8U5vd" /></th>
 						    </c:if>
-						    <c:if test="${loop.first && stay == 1}">
+						    <c:if test="${loop.first && stay == 5}">
 						        <th><img src="${item.image }" /></th>
 						    </c:if>
 						    <c:if test="${not loop.first}">
@@ -40,22 +40,26 @@
 <%-- 							<td>${each.value }</td> --%>
 <%-- 						</c:forEach> --%>
 						<c:forEach items="${dealerHand}" var="item" varStatus="loop">
-						    <c:if test="${loop.first && stay == 0}">
+						    <c:if test="${loop.first && stay != 5}">
 						        <td></td>
 						    </c:if>
-						    <c:if test="${loop.first && stay == 1}">
+						    <c:if test="${loop.first && stay == 5}">
 						        <td>${item.value }</td>
-						        <tr><td>Value: ${dealerHandValue}</td></tr>
 						    </c:if>
 						    <c:if test="${not loop.first}">
 						        <td>${item.value }</td> 
 						    </c:if>
 						</c:forEach>
+						    <c:if test="${stay == 5}">
+						        <td>${item.value }</td>
+						        <tr><td>Value: ${dealerHandValue}</td></tr>
+						    </c:if>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<div class="bets">
+			<c:if test="${stay == 5|| stay == 0}">
 			<button onclick="addFive()" id="addFive">$5</button>
 			<button onclick="addTwentyFive()" id="addTwentyFive">$25</button>
 			<button onclick="addHundred()" id="addHundred">$100</button>
@@ -66,6 +70,7 @@
 				<input type="hidden" name="betDeal" value="5">
 				<button type="submit" value="Submit">Deal</button>
 			</form>
+			</c:if>
 		</div>
 		<div class="inside">
 			<table id="playerHand">
@@ -84,15 +89,19 @@
 					</tr>
 				</tbody>
 			</table>
-			<c:if test="${stay == 0}">
-			<form action="/hit">
-				<button type="submit">Hit</button>
-			</form>
-			<form action="/stay">
-				<button type="submit" onClick="flipCard()">Stay</button>
-			</form>
+			
+			<c:if test="${stay == 1||stay == 2||stay == 3}">
+				<a href="/hit"><button>Hit</button></a>
 			</c:if>
-
+			<c:if test="${stay == 3}">
+				<a href="/split"><button>Split</button></a>
+			</c:if>
+			<c:if test="${stay == 2||stay == 3}">
+			<a href="/double"><button onClick="flipCard()">Double</button></a>
+			</c:if>
+			<c:if test="${stay == 1||stay == 2||stay == 3||stay == 4}">
+			<a href="/stay"><button onClick="flipCard()">Stay</button></a>
+			</c:if>
 			<p>Bankroll: $${ user.bankroll }</p>
 		</div>
 	</div>
