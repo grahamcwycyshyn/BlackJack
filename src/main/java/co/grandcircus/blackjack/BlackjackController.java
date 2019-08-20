@@ -206,7 +206,7 @@ public class BlackjackController {
 		} else if (score < 17) {
 			return true;
 		} else {
-			return true;
+			return false;
 		}
 	}
 
