@@ -87,7 +87,13 @@ public class BlackjackController {
 		List<Card> userHand = new ArrayList<>();
 		userHand.add(a.getCard(deck.getId()));
 		userHand.add(a.getCard(deck.getId()));
-		
+		if(getHandValue(userHand) == 21) {
+			Long id = (long) 1;
+			User user = userDao.findById(id).get();
+			user.setBankroll((long) (user.getBankroll() + 1.5*bet));
+			userDao.save(user);
+			session.setAttribute("user", user);
+		}
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("userHandValue", getHandValue(userHand));
 		session.setAttribute("dealerHand", dealerHand);
@@ -126,10 +132,28 @@ public class BlackjackController {
 		while (dealerHit(dealerHand) == true) {
 			dealerHand.add(a.getCard(deck.getId()));
 		}
+		System.out.println(bust(dealerHand));
+		System.out.println(bust(userHand));
 		if (bust(dealerHand) == true && bust(userHand) == false) {
 			Long id = (long) 1;
 			User user = userDao.findById(id).get();
 			user.setBankroll(user.getBankroll() + bet);
+			userDao.save(user);
+			session.setAttribute("user", user);
+		} else if(bust(dealerHand) == false && bust(userHand) == false) {
+			if(getHandValue(dealerHand) < getHandValue(userHand)) {
+				Long id = (long) 1;
+				User user = userDao.findById(id).get();
+				user.setBankroll(user.getBankroll() + bet);
+				userDao.save(user);
+				session.setAttribute("user", user);
+			} else if(getHandValue(dealerHand) > getHandValue(userHand)) {
+				Long id = (long) 1;
+				User user = userDao.findById(id).get();
+				user.setBankroll(user.getBankroll() - bet);
+				userDao.save(user);
+				session.setAttribute("user", user);
+			}
 		}
 		return new ModelAndView("redirect:/game");
 	}
