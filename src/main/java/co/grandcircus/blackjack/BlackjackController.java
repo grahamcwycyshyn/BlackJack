@@ -93,6 +93,12 @@ public class BlackjackController {
 			user.setBankroll((long) (user.getBankroll() + 1.5*bet));
 			userDao.save(user);
 			session.setAttribute("user", user);
+		}  else {
+			Long id = (long) 1;
+			User user = userDao.findById(id).get();
+			user.setBankroll((user.getBankroll() - bet));
+			userDao.save(user);
+			session.setAttribute("user", user);
 		}
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("userHandValue", getHandValue(userHand));
@@ -104,7 +110,6 @@ public class BlackjackController {
 		}
 		System.out.println("stay after if: " + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
-
 	}
 
 	@RequestMapping("/hit")
@@ -118,14 +123,8 @@ public class BlackjackController {
 			session.setAttribute("userHandValue", getHandValue(userHand));
 		} else {
 			session.setAttribute("userHandValue", "BUST!");
-			Long id = (long) 1;
-			User user = userDao.findById(id).get();
-			user.setBankroll(user.getBankroll() - bet);
-			userDao.save(user);
-			session.setAttribute("user", user);
 		}
 		return new ModelAndView("redirect:/game");
-
 	}
 
 	@RequestMapping("/stay")
@@ -134,34 +133,26 @@ public class BlackjackController {
 			@SessionAttribute(name = "bet") Integer bet) {
 
 		session.setAttribute("userHand", userHand);
-		
-
 		session.setAttribute("stay", 1);
 		while (dealerHit(dealerHand) == true) {
 			dealerHand.add(a.getCard(deck.getId()));
 		}
-		System.out.println(bust(dealerHand));
-		System.out.println(bust(userHand));
 		if (bust(dealerHand) == true && bust(userHand) == false) {
 			Long id = (long) 1;
 			User user = userDao.findById(id).get();
-			user.setBankroll(user.getBankroll() + bet);
+			user.setBankroll(user.getBankroll() + 2*bet);
 			userDao.save(user);
 			session.setAttribute("user", user);
+			session.setAttribute("dealerHandValue", "BUST");
 		} else if(bust(dealerHand) == false && bust(userHand) == false) {
+			session.setAttribute("dealerHandValue", getHandValue(dealerHand));
 			if(getHandValue(dealerHand) < getHandValue(userHand)) {
 				Long id = (long) 1;
 				User user = userDao.findById(id).get();
-				user.setBankroll(user.getBankroll() + bet);
+				user.setBankroll(user.getBankroll() + 2*bet);
 				userDao.save(user);
 				session.setAttribute("user", user);
-			} else if(getHandValue(dealerHand) > getHandValue(userHand)) {
-				Long id = (long) 1;
-				User user = userDao.findById(id).get();
-				user.setBankroll(user.getBankroll() - bet);
-				userDao.save(user);
-				session.setAttribute("user", user);
-			}
+			} 
 		}
 		return new ModelAndView("redirect:/game");
 	}

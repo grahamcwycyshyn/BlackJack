@@ -45,6 +45,7 @@
 						    </c:if>
 						    <c:if test="${loop.first && stay == 1}">
 						        <td>${item.value }</td>
+						        <tr><td>Value: ${dealerHandValue}</td></tr>
 						    </c:if>
 						    <c:if test="${not loop.first}">
 						        <td>${item.value }</td> 

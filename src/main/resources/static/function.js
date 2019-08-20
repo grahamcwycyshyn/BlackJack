@@ -1,6 +1,6 @@
 let betAmount = 0;
 let back = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSVhzvnISkrvxN3Mg7uFbwKSmzg-EzcfNjnKKb5Sf90Rm8U5vd";
-let front = ${item.image};
+let front = "${item.image}";
 let current = back;
 
 
@@ -49,5 +49,5 @@ function addThousand() {
 
 function flipCard() {
 	let facedown = document.getElementByClass("backside");
-	facedown.innetHTML = "<th class=\"backside\">${item.image}</th>"
+	facedown.innetHTML = "<th class=\"backside\">${item.image}</th>";
 }
