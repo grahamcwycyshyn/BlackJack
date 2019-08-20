@@ -8,11 +8,11 @@
 </head>
 <body>
 
-	<h1>Welcome, get ready to play</h1>
+	<h1>Welcome, ${ user.name } get ready to play!</h1>
 	
-	Welcome ${ user.name }!
 	
-	<a href="/">Home</a>
+	
+	  <a href="/game?id=${ deck.id }"><button>Play!</button></a> 
 
 </body>
 </html>
