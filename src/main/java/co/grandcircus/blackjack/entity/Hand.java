@@ -133,15 +133,15 @@ public class Hand {
 		}
 		
 	}
-	public static boolean bust(List<Card> hand) {
-		if(Card.getHandValue(hand) > 21) {
+	public boolean bust(List<Card> hand) {
+		if(getHandValue(hand) > 21) {
 			return true;
 		}else {
 			return false;
 		}
 	}
-	public static boolean canHit(List<Card> hand) {
-		if(!Card.bust(hand)) {
+	public boolean canHit(List<Card> hand) {
+		if(!bust(hand)) {
 			return true;
 		}else {
 			return false;
