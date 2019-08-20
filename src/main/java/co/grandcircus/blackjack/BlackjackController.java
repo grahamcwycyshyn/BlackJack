@@ -76,7 +76,8 @@ public class BlackjackController {
 //		return new ModelAndView("login-form");
 //	}
 	@RequestMapping("/deal")
-	public ModelAndView deal(HttpSession session, @SessionAttribute(name = "deck", required = false) Deck deck,
+	public ModelAndView deal(HttpSession session, 
+			@SessionAttribute(name = "deck", required = false) Deck deck,
 			@RequestParam("betDeal") Integer bet) {
 		session.setAttribute("bet", bet);
 		Object d = session.getAttribute("deck");
@@ -122,7 +123,8 @@ public class BlackjackController {
 	@RequestMapping("/hit")
 	public ModelAndView hit(HttpSession session, @SessionAttribute(name = "deck") Deck deck,
 			@SessionAttribute(name = "userHand") List<Card> userHand,
-			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, @SessionAttribute(name = "bet") Integer bet) {
+			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, 
+			@SessionAttribute(name = "bet") Integer bet) {
 		if(deck.getRemaining() <= 12) {
 			deck = a.shuffle(deck);
 		}
@@ -144,8 +146,10 @@ public class BlackjackController {
 	}
 
 	@RequestMapping("/stay")
-	public ModelAndView stay(HttpSession session, @SessionAttribute(name = "userHand") List<Card> userHand,
-			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, @SessionAttribute(name = "deck") Deck deck,
+	public ModelAndView stay(HttpSession session, 
+			@SessionAttribute(name = "userHand") List<Card> userHand,
+			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, 
+			@SessionAttribute(name = "deck") Deck deck,
 			@SessionAttribute(name = "bet") Integer bet) {
 
 		session.setAttribute("userHand", userHand);
@@ -168,9 +172,47 @@ public class BlackjackController {
 				user.setBankroll(user.getBankroll() + 2*bet);
 				userDao.save(user);
 				session.setAttribute("user", user);
-			} 
+			} else if(getHandValue(dealerHand) == getHandValue(userHand)) {
+				Long id = (long) 1;
+				User user = userDao.findById(id).get();
+				user.setBankroll(user.getBankroll() + bet);
+				userDao.save(user);
+				session.setAttribute("user", user);
+			}
 		}
 		System.out.println("stay stay:" + session.getAttribute("stay"));
+		return new ModelAndView("redirect:/game");
+	}
+	
+	@RequestMapping("/double")
+	public ModelAndView doubleDown(HttpSession session,
+			@SessionAttribute(name="deck") Deck deck,
+			@SessionAttribute(name="bet") Integer bet,
+			@SessionAttribute(name="userHand") List<Card> userHand) {
+		if(deck.getRemaining() <= 12) { 
+			deck = a.shuffle(deck);
+		}
+		userHand.add(a.getCard(deck.getId()));
+		
+		session.setAttribute("userHand", userHand);
+		if (bust(userHand) == false) {
+			session.setAttribute("userHandValue", getHandValue(userHand));
+			session.setAttribute("stay", 1);
+			Integer oldBet = (Integer) session.getAttribute("bet");
+			session.setAttribute("bet", oldBet*2);
+			Long id = (long) 1;
+			User user = userDao.findById(id).get();
+			user.setBankroll(user.getBankroll() - oldBet);
+			userDao.save(user);
+			session.setAttribute("user", user);
+			if(getHandValue(userHand)== 21) {
+				session.setAttribute("stay", 4);
+			}
+		} else {
+			session.setAttribute("userHandValue", "BUST!");
+			session.setAttribute("stay", 5);
+		}
+		System.out.println("stay hit:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 	}
 
