@@ -58,16 +58,16 @@ public class BlackjackController {
 		return m;
 	}
 
-	@RequestMapping("/signup")
-	public ModelAndView showSignup() {
-		return new ModelAndView("signup-form");
-	}
+//	@RequestMapping("/login")
+//	public ModelAndView showSignup() {
+//		return new ModelAndView("login-form");
+//	}
 
-	@RequestMapping("/signup-confirmation")
+	@RequestMapping("/login-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
 		userDao.save(user);
 		session.setAttribute("user", user);
-		ModelAndView mv = new ModelAndView("thanks");
+		ModelAndView mv = new ModelAndView("welcome");
 		return mv;
 	}
 
