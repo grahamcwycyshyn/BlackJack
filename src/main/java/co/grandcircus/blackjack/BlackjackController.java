@@ -186,16 +186,17 @@ public class BlackjackController {
 		userHand.add(a.getCard(deck.getId()));
 		
 		session.setAttribute("userHand", userHand);
+		Integer oldBet = (Integer) session.getAttribute("bet");
+		session.setAttribute("bet", oldBet*2);
+		Long id = (long) 1;
+		User user = userDao.findById(id).get();
+		user.setBankroll(user.getBankroll() - oldBet);
+		userDao.save(user);
+		session.setAttribute("user", user);
 		if (bust(userHand) == false) {
 			session.setAttribute("userHandValue", getHandValue(userHand));
 			session.setAttribute("stay", 4);
-			Integer oldBet = (Integer) session.getAttribute("bet");
-			session.setAttribute("bet", oldBet*2);
-			Long id = (long) 1;
-			User user = userDao.findById(id).get();
-			user.setBankroll(user.getBankroll() - oldBet);
-			userDao.save(user);
-			session.setAttribute("user", user);
+			
 			if(getHandValue(userHand)== 21) {
 				session.setAttribute("stay", 4);
 			}
