@@ -97,6 +97,12 @@ public class BlackjackController {
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("userHandValue", getHandValue(userHand));
 		session.setAttribute("dealerHand", dealerHand);
+		session.setAttribute("stay", 0);
+		System.out.println("stay before if: " + session.getAttribute("stay"));
+		if(getHandValue(userHand) > 20) {
+			session.setAttribute("stay", 1);
+		}
+		System.out.println("stay after if: " + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 
 	}
@@ -129,6 +135,8 @@ public class BlackjackController {
 
 		session.setAttribute("userHand", userHand);
 		
+
+		session.setAttribute("stay", 1);
 		while (dealerHit(dealerHand) == true) {
 			dealerHand.add(a.getCard(deck.getId()));
 		}
