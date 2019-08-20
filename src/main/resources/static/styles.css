@@ -15,3 +15,8 @@ img {
 th{
 	width: 75px;
 }
+
+.backside {
+	height: auto;
+	width: 87%;
+}
