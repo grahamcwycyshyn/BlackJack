@@ -27,6 +27,41 @@
 	
 	</div>
 	
+	<div>
+		<h1>GAMEPLAY</h1>
+		<p>
+			Each player is dealt two cards face up, 
+			while the dealer is dealt one card face up and one card face down.
+			Starting on the dealer's left, players are asked if they would like to hit-
+			receive another card, or stay- keep their current cards.  If a player hits and their 
+			score goes over 21, they bust- lose their bet.  After all players have
+			had their turn, the dealer turns their face down card up and takes their turn.  After 
+			the dealer is done with their turn, players whose score is higher than the dealers win 
+			their bets, players who have the same score as the dealer do not win or lose their bets,
+			and players whose score is below the dealers lose their bets. 
+	    </p>	
+	 
+	
+	</div>
+	
+	<div>
+		<h1>SPECIAL CASES</h1>
+		<p>
+			If a player is dealt a blackjack- an ace and a face card, on the first deal, they 
+			automatically win 1.5 times their bet.  If the player gets two of the same card 
+			on the first deal, they have the option to split their hand- they place a second
+			bet equal to their original bet and they split their cards
+			into two hands, each of which will receive another card on top to be played as 
+			an independent hand and bet. Any player may choose to double- double their bet and 
+			receive one more card, but 
+			only before they have chosen to hit or stay.  Any player may choose to surrender-
+			lose half of their bet and drop out of the hand, but only before they have chosen to 
+			hit or stay. 
+	    </p>	
+	 
+	
+	</div>
+	
 	
 
 </body>

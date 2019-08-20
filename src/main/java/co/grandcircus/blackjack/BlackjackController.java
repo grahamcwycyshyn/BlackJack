@@ -17,7 +17,6 @@ import co.grandcircus.blackjack.dao.UserRepository;
 import co.grandcircus.blackjack.entity.Card;
 import co.grandcircus.blackjack.entity.Deck;
 import co.grandcircus.blackjack.entity.User;
-import co.grandcircus.blackjack.entity.Hand;
 
 //Note: need to change bet method when pulling in multiple users, currently only takes in one user
 @RestController
@@ -71,7 +70,7 @@ public class BlackjackController {
 			@SessionAttribute(name = "deck", required = false) Deck deck,
 			@RequestParam("betDeal") Integer bet) {
 		session.setAttribute("bet", bet);
-		Object d = session.getAttribute("deck");
+//		Object d = session.getAttribute("deck");
 		if(deck.getRemaining() <= 12) {
 			deck = a.shuffle(deck);
 		}
@@ -207,7 +206,7 @@ public class BlackjackController {
 		System.out.println("stay hit:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 	}
-
+	
 	public int getHandValue(List<Card> hand) {
 		int score = 0;
 		int aceCount = acesInHand(hand);
