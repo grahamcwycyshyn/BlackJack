@@ -79,12 +79,11 @@ public class BlackjackController {
 	public ModelAndView deal(HttpSession session, @SessionAttribute(name = "deck", required = false) Deck deck,
 			@RequestParam("betDeal") Integer bet) {
 		session.setAttribute("bet", bet);
-//		System.out.println(session.getAttribute("deck"));
 		Object d = session.getAttribute("deck");
-//		System.out.println(d);
+		if(deck.getRemaining() <= 12) {
+			deck = a.shuffle(deck);
+		}
 		List<Card> dealerHand = new ArrayList<>();
-//		System.out.println(deck.getId());
-//		System.out.println(a.getCard(deck.getId()));
 		dealerHand.add(a.getCard(deck.getId()));
 		dealerHand.add(a.getCard(deck.getId()));
 		List<Card> userHand = new ArrayList<>();
@@ -124,6 +123,9 @@ public class BlackjackController {
 	public ModelAndView hit(HttpSession session, @SessionAttribute(name = "deck") Deck deck,
 			@SessionAttribute(name = "userHand") List<Card> userHand,
 			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, @SessionAttribute(name = "bet") Integer bet) {
+		if(deck.getRemaining() <= 12) {
+			deck = a.shuffle(deck);
+		}
 		userHand.add(a.getCard(deck.getId()));
 		
 		session.setAttribute("userHand", userHand);
