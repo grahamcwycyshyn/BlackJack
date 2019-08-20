@@ -58,11 +58,6 @@ public class BlackjackController {
 		return m;
 	}
 
-//	@RequestMapping("/login")
-//	public ModelAndView showSignup() {
-//		return new ModelAndView("login-form");
-//	}
-
 	@RequestMapping("/login-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
 		userDao.save(user);
@@ -71,10 +66,6 @@ public class BlackjackController {
 		return mv;
 	}
 
-//	@RequestMapping("/login")
-//	public ModelAndView showLogin() {
-//		return new ModelAndView("login-form");
-//	}
 	@RequestMapping("/deal")
 	public ModelAndView deal(HttpSession session, 
 			@SessionAttribute(name = "deck", required = false) Deck deck,
@@ -197,7 +188,7 @@ public class BlackjackController {
 		session.setAttribute("userHand", userHand);
 		if (bust(userHand) == false) {
 			session.setAttribute("userHandValue", getHandValue(userHand));
-			session.setAttribute("stay", 1);
+			session.setAttribute("stay", 4);
 			Integer oldBet = (Integer) session.getAttribute("bet");
 			session.setAttribute("bet", oldBet*2);
 			Long id = (long) 1;
@@ -216,16 +207,6 @@ public class BlackjackController {
 		return new ModelAndView("redirect:/game");
 	}
 
-//	@RequestMapping("/bet")
-//	public ModelAndView bet(@RequestParam(value="bankroll", required=true) Long bet) {
-//		ModelAndView m = new ModelAndView("index");
-//		Long id = (long) 1;
-//		User user = userDao.findById(id).get();
-//		Hand hand = handDao.findTopByOrderByIdDesc();
-//		user.setBankroll(user.getBankroll() - bet);
-//		userDao.save(user);
-//		return m;
-//	}
 	public int getHandValue(List<Card> hand) {
 		int score = 0;
 		int aceCount = acesInHand(hand);
