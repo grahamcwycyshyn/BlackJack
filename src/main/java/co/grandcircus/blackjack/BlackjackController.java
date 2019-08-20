@@ -130,10 +130,19 @@ public class BlackjackController {
 	@RequestMapping("/stay")
 			public ModelAndView stay(HttpSession session,
 					@SessionAttribute(name="userHand") List<Card> userHand,
-					@SessionAttribute(name= "dealerhand") List<Card> dealerHand,
-					@SessionAttribute(name="deck") Deck deck){
-				userHand.add(a.getCard(deck.getId()));
+					@SessionAttribute(name= "dealerHand") List<Card> dealerHand,
+					@SessionAttribute(name="deck") Deck deck,
+					@SessionAttribute(name="bet") Integer bet){
+				
 				session.setAttribute("userHand", userHand);
+				Card card = new Card();
+				while(card.dealerHit(dealerHand) == true) {
+					dealerHand.add(a.getCard(deck.getId()));
+				} if(card.bust(dealerHand) == true && card.bust(userHand) == false) {
+					Long id = (long) 1;
+					User user = userDao.findById(id).get();
+					user.setBankroll(user.getBankroll() + bet);
+				}
 				return new ModelAndView("redirct:/game");
 			}
 		
