@@ -102,6 +102,7 @@
 			</c:if>
 			<c:if test="${stay == 2||stay == 3}">
 			<a href="/double"><button onClick="flipCard()">Double</button></a>
+			<a href="/surrender"><button>Surrender</button></a>
 			</c:if>
 			<c:if test="${stay == 1||stay == 2||stay == 3||stay == 4}">
 			<a href="/stay"><button onClick="flipCard()">Stay</button></a>

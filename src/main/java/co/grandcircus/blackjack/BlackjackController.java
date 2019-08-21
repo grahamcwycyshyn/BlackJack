@@ -228,8 +228,9 @@ public class BlackjackController {
 	@RequestMapping("/surrender")
 	public ModelAndView surrender(HttpSession session,
 			@SessionAttribute(name="dealerHand") List<Card> dealerHand,
+			@SessionAttribute(name="userHand") List<Card> userHand,
+			@SessionAttribute(name="deck") Deck deck,
 			@SessionAttribute(name="bet") Integer bet) {
-		if(dealerHand.get(1).getValue() == "ACE") {
 			//set stay equal to surrender button visible
 			Integer oldBet = (Integer) session.getAttribute("bet");
 			session.setAttribute("bet", oldBet/2);
@@ -238,10 +239,19 @@ public class BlackjackController {
 			user.setBankroll(user.getBankroll() + oldBet/2);
 			userDao.save(user);
 			session.setAttribute("user", user);
+			stay(session, userHand, dealerHand, deck, 0);
 			//Player leaves game
-		}
 		return new ModelAndView("redirect:/game");
 	}
+	
+//	@RequestMapping("/split")
+//	public ModelAndView split(HttpSession session,
+//			@SessionAttribute(name="userHand") List<Card> userHand,
+//			@SessionAttribute(name="deck") Deck deck) {
+//		userHand.add(a.getCard(deck.getId()));
+//		userHand.add(a.getCard(deck.getId()));
+//		session.setAttribute("userHand", userHand);
+//	}
 	
 	public int getHandValue(List<Card> hand) {
 		int score = 0;
