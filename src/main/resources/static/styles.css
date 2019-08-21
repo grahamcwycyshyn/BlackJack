@@ -13,6 +13,18 @@ button {
 	margin-top: 25px;
 }
 
+#black {
+	position: absolute;
+	top: 50px;
+	left: 50px;	
+	font-size: 500%;
+}
+#jack {
+	position: absolute;
+	top: 50px;
+	right: 50px;	
+	font-size: 500%;
+}
 #dealerHand {
 	text-align: center;
 	margin-left: auto;
@@ -21,10 +33,6 @@ button {
 }
 #playerHand {
 	margin-top: 25px;
-}
-
-#black {
-	
 }
 
 img {
