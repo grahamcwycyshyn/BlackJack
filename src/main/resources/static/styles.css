@@ -5,6 +5,26 @@ div {
 	height: 30vh;
 	text-align:center;
 	border:solid 1px black;
+	color: white;
+	
+}
+
+button {
+	margin-top: 25px;
+}
+
+#dealerHand {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 25px;
+}
+#playerHand {
+	margin-top: 25px;
+}
+
+#black {
+	
 }
 
 img {
@@ -19,4 +39,8 @@ th{
 .backside {
 	height: auto;
 	width: 87%;
+}
+
+body {
+	background-image: url("https://image.freepik.com/free-photo/green-poker-table-felt-background-with-shade-vignette_48277-156.jpg");
 }

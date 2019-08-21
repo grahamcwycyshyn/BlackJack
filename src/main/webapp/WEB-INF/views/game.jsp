@@ -14,7 +14,9 @@
 </head>
 <body>
 	<div>
-		<div class="inside">
+	<h1>BLACK</h1>
+		<div class="inside" id="dealer">
+		
 			<table id="dealerHand">
 				<thead>
 					<tr>
@@ -57,7 +59,9 @@
 					</tr>
 				</tbody>
 			</table>
+			
 		</div>
+		<h1>JACK</h1>
 		<div class="bets">
 			<c:if test="${stay == 5|| stay == 0}">
 			<button onclick="addFive()" id="addFive">$5</button>
