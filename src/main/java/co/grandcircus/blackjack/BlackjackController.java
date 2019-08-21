@@ -1,5 +1,6 @@
 package co.grandcircus.blackjack;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class BlackjackController {
 		session.setAttribute("deck", deck);
 //		System.out.println(session.getAttribute("deck"));
 		session.setAttribute("stay", 0);
-		System.out.println("stay home:" + session.getAttribute("stay"));
+		System.out.println("gamestate home:" + session.getAttribute("stay"));
 		return m;
 	}
 
@@ -53,12 +54,13 @@ public class BlackjackController {
 		m.addObject("deck", deck);
 		session.setAttribute("deck", deck);
 //		System.out.println(session.getAttribute("deck"));
-		System.out.println("stay game:" + session.getAttribute("stay"));
+		System.out.println("gamestate game:" + session.getAttribute("stay"));
 		return m;
 	}
 
 	@RequestMapping("/login-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
+		user.setBankroll((long) 500);
 		userDao.save(user);
 		session.setAttribute("user", user);
 		ModelAndView mv = new ModelAndView("welcome");
@@ -80,6 +82,7 @@ public class BlackjackController {
 		List<Card> userHand = new ArrayList<>();
 		userHand.add(a.getCard(deck.getId()));
 		userHand.add(a.getCard(deck.getId()));
+		System.out.println(userHand);
 		if(getHandValue(userHand) == 21) {
 			Long id = (long) 1;
 			User user = userDao.findById(id).get();
@@ -97,7 +100,7 @@ public class BlackjackController {
 		session.setAttribute("userHandValue", getHandValue(userHand));
 		session.setAttribute("dealerHand", dealerHand);
 		session.setAttribute("stay", 0);
-//		System.out.println("stay before if: " + session.getAttribute("stay"));
+//		System.out.println("gamestate before if: " + session.getAttribute("stay"));
 		if(userHand.get(0).getValue().equalsIgnoreCase(userHand.get(1).getValue())) {
 			session.setAttribute("stay", 3);
 		} else if(getHandValue(userHand) == 21){
@@ -106,7 +109,7 @@ public class BlackjackController {
 			session.setAttribute("stay", 2);			
 		}
 		
-		System.out.println("stay deal:" + session.getAttribute("stay"));
+		System.out.println("gamestate deal:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 	}
 
@@ -131,7 +134,7 @@ public class BlackjackController {
 			session.setAttribute("userHandValue", "BUST!");
 			session.setAttribute("stay", 5);
 		}
-		System.out.println("stay hit:" + session.getAttribute("stay"));
+		System.out.println("gamestate hit:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 	}
 
@@ -170,7 +173,22 @@ public class BlackjackController {
 				session.setAttribute("user", user);
 			}
 		}
-		System.out.println("stay stay:" + session.getAttribute("stay"));
+		List<Card> testHand = new ArrayList<>();//New hand from db
+		String str = userHand.toString();// turns hand into a single string
+//		after pulling hand from db
+		str = (str.substring(1, str.length()-1));//removes square brackets
+		String[] newStr = str.split(", ");//splits string from db into a list of strings each being a card
+		for (int i = 0; i < newStr.length; i++){//loops turning each string into a card and adding it to a haND
+			Card newC = new Card();//temp card to add to hand
+			String[] tempCard = newStr[i].split(",");//splitting card/string into a string array each string a card value
+			newC.setValue(tempCard[0]);
+			newC.setImage(tempCard[1]);
+			newC.setSuit(tempCard[2]);
+			testHand.add(newC);
+			System.out.println(i + ": " + newC);
+		}
+		System.out.println(testHand);
+		System.out.println("gamestate stay:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 	}
 	
@@ -203,7 +221,7 @@ public class BlackjackController {
 			session.setAttribute("userHandValue", "BUST!");
 			session.setAttribute("stay", 5);
 		}
-		System.out.println("stay hit:" + session.getAttribute("stay"));
+		System.out.println("gamestate hit:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
 	}
 	

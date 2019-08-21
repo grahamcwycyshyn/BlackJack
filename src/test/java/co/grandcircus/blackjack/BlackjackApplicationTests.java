@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import co.grandcircus.blackjack.entity.Card;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BlackjackApplicationTests {
@@ -91,7 +92,7 @@ public class BlackjackApplicationTests {
 		hand4.add(c12);
 		hand4.add(c13);
 		hand4.add(c14);
-		assertEquals(20, Card.getHandValue(hand));
+		assertEquals(20, BlackjackController.getHandValue(hand));
 		assertEquals(18, Card.getHandValue(hand2));
 		assertEquals(29, Card.getHandValue(hand3));
 		assertEquals(19, Card.getHandValue(hand4));
