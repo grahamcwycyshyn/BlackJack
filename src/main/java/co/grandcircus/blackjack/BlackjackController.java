@@ -244,6 +244,7 @@ public class BlackjackController {
 		return new ModelAndView("redirect:/game");
 	}
 	
+
 //	@RequestMapping("/split")
 //	public ModelAndView split(HttpSession session,
 //			@SessionAttribute(name="userHand") List<Card> userHand,
@@ -252,6 +253,15 @@ public class BlackjackController {
 //		userHand.add(a.getCard(deck.getId()));
 //		session.setAttribute("userHand", userHand);
 //	}
+
+	@RequestMapping("/instructions")
+	public ModelAndView viewInstructions()	{
+		ModelAndView m = new ModelAndView("instructions");
+		return m;
+	}
+	
+	
+
 	
 	public int getHandValue(List<Card> hand) {
 		int score = 0;

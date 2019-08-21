@@ -61,7 +61,7 @@
 			</table>
 			<h1 id="jack">JACK</h1>
 		</div>
-		
+	  			
 		<div class="bets">
 			<c:if test="${stay == 5|| stay == 0}">
 			<button onclick="addFive()" id="addFive">$5</button>
@@ -110,5 +110,6 @@
 			<p>Bankroll: $${ user.bankroll }</p>
 		</div>
 	</div>
+	
 </body>
 </html>

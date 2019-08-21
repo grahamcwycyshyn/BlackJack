@@ -22,8 +22,15 @@
 		<p>
 			The computer will decide if an ace is worth 1 or 11. 
 			Face cards are 10 and any other card is its pip value.
-	    </p>	
-	 
+	    </p>
+	 </div>
+	   
+	  <div>	
+	    <h1>BETTING</h1>
+	    <p>Before the deal begins, each player places a bet, in front of them in the designated area. 
+	    Minimum and maximum limits are established on the betting, 
+	    and the general limits are from $5 to $1000.
+	    </p>
 	
 	</div>
 	
@@ -40,9 +47,7 @@
 			their bets, players who have the same score as the dealer do not win or lose their bets,
 			and players whose score is below the dealers lose their bets. 
 	    </p>	
-	 
-	
-	</div>
+	 </div>
 	
 	<div>
 		<h1>SPECIAL CASES</h1>

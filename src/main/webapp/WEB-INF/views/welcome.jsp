@@ -5,6 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link href="/welcome.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -13,6 +14,9 @@
 	
 	
 	  <a href="/game?id=${ deck.id }"><button>Play!</button></a> 
+	  
+	  <p><div><a href="/instructions"><button>Instructions</button></a></div>
+  
 
 </body>
 </html>
