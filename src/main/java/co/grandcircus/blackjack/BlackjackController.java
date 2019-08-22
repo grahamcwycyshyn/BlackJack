@@ -272,9 +272,9 @@ public class BlackjackController {
 	public ModelAndView lastfive(HttpSession session,
 			@SessionAttribute(name = "user", required = false) User sessionUser) {
 		ModelAndView mv = new ModelAndView("lastfive");
-		Long id = sessionUser.getId();
-		List<Card> hand1 = handToCardList(getLastHand5(id));
-		mv.addObject("hand1", hand1);
+		Long id = sessionUser.getId();//grabs user id from the session
+		List<Card> hand1 = handToCardList(getLastHand5(id));//creates the list of cards of the most recent hand
+		mv.addObject("hand1", hand1);//adds it to the model and view
 		List<Card> hand2 = handToCardList(getLastHand4(id));
 		mv.addObject("hand2", hand2);
 		List<Card> hand3 = handToCardList(getLastHand3(id));
@@ -379,12 +379,12 @@ public class BlackjackController {
 	 * @param user
 	 */
 	public void saveToDB(List<Card> userHand, User user) {
-		String str = userHand.toString();
-		Long id = user.getId();
-		Hand hand = new Hand();
+		String str = userHand.toString();//Changes the list of cards to a single string
+		Long id = user.getId();//gets the users id number
+		Hand hand = new Hand();//creates a hand class this is needed to read and write to the table
 		hand.setUserId(id);
 		hand.setHand(str);
-		handDao.save(hand);
+		handDao.save(hand);//saves the userhand to table with user id And automatically assigns a hand id
 	}
 	public List<Card> handToCardList(Hand hand) {
 		List<Card> testHand = new ArrayList();
@@ -405,13 +405,13 @@ public class BlackjackController {
 	}
 	
 	public Hand getLastHand5(Long id){
-		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
-		return hands.get(0);
+		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);//grabs the last 5 hands from table
+		return hands.get(0);//returns the most recent hand
 	}
 	
 	public Hand getLastHand4(Long id){
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
-		return hands.get(1);
+		return hands.get(1);//returns second most recent hand
 	}
 	
 	public Hand getLastHand3(Long id){
