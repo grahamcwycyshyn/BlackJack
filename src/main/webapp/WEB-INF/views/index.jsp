@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/login-form.css" rel="stylesheet" />
 </head>
 <body>
 <h1>Log in</h1>
