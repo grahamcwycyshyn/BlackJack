@@ -52,3 +52,7 @@ th{
 body {
 	background-image: url("https://image.freepik.com/free-photo/green-poker-table-felt-background-with-shade-vignette_48277-156.jpg");
 }
+
+.lastfive {
+	width: 75px;
+}

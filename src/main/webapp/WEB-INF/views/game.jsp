@@ -110,6 +110,7 @@
 			<p>Bankroll: $${ user.bankroll }</p>
 		</div>
 	</div>
+	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
 	
 </body>
 </html>

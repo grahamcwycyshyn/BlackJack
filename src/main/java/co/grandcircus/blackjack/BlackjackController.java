@@ -17,6 +17,7 @@ import co.grandcircus.blackjack.dao.HandRepository;
 import co.grandcircus.blackjack.dao.UserRepository;
 import co.grandcircus.blackjack.entity.Card;
 import co.grandcircus.blackjack.entity.Deck;
+import co.grandcircus.blackjack.entity.Hand;
 import co.grandcircus.blackjack.entity.User;
 
 //Note: need to change bet method when pulling in multiple users, currently only takes in one user
@@ -46,8 +47,9 @@ public class BlackjackController {
 
 	@RequestMapping("/game")
 	public ModelAndView game(@RequestParam(value = "id", required = false) String id,
-			@SessionAttribute(name = "deck", required = false) Deck deck, HttpSession session) {
-		Long i = (long) 1;
+			@SessionAttribute(name = "deck", required = false) Deck deck,
+			@SessionAttribute(name = "user", required = false) User sessionUser, HttpSession session) {
+		Long i = sessionUser.getId();
 		User user = userDao.findById(i).get();
 		ModelAndView m = new ModelAndView("game");
 		m.addObject("user", user);
@@ -70,6 +72,7 @@ public class BlackjackController {
 	@RequestMapping("/deal")
 	public ModelAndView deal(HttpSession session, 
 			@SessionAttribute(name = "deck", required = false) Deck deck,
+			@SessionAttribute(name = "user", required = false) User sessionUser,
 			@RequestParam("betDeal") Integer bet) {
 		session.setAttribute("bet", bet);
 //		Object d = session.getAttribute("deck");
@@ -84,13 +87,13 @@ public class BlackjackController {
 		userHand.add(a.getCard(deck.getId()));
 		System.out.println(userHand);
 		if(getHandValue(userHand) == 21) {
-			Long id = (long) 1;
+			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll((long) (user.getBankroll() + 1.5*bet));
 			userDao.save(user);
 			session.setAttribute("user", user);
 		}  else {
-			Long id = (long) 1;
+			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll((user.getBankroll() - bet));
 			userDao.save(user);
@@ -117,7 +120,8 @@ public class BlackjackController {
 	public ModelAndView hit(HttpSession session, @SessionAttribute(name = "deck") Deck deck,
 			@SessionAttribute(name = "userHand") List<Card> userHand,
 			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, 
-			@SessionAttribute(name = "bet") Integer bet) {
+			@SessionAttribute(name = "bet") Integer bet,
+			@SessionAttribute(name = "user", required = false) User sessionUser) {
 		if(deck.getRemaining() <= 12) {
 			deck = a.shuffle(deck);
 		}
@@ -143,7 +147,8 @@ public class BlackjackController {
 			@SessionAttribute(name = "userHand") List<Card> userHand,
 			@SessionAttribute(name = "dealerHand") List<Card> dealerHand, 
 			@SessionAttribute(name = "deck") Deck deck,
-			@SessionAttribute(name = "bet") Integer bet) {
+			@SessionAttribute(name = "bet") Integer bet,
+			@SessionAttribute(name = "user", required = false) User sessionUser) {
 
 		session.setAttribute("userHand", userHand);
 		session.setAttribute("stay", 5);
@@ -151,7 +156,7 @@ public class BlackjackController {
 			dealerHand.add(a.getCard(deck.getId()));
 		}
 		if (bust(dealerHand) == true && bust(userHand) == false) {
-			Long id = (long) 1;
+			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll(user.getBankroll() + 2*bet);
 			userDao.save(user);
@@ -160,13 +165,13 @@ public class BlackjackController {
 		} else if(bust(dealerHand) == false && bust(userHand) == false) {
 			session.setAttribute("dealerHandValue", getHandValue(dealerHand));
 			if(getHandValue(dealerHand) < getHandValue(userHand)) {
-				Long id = (long) 1;
+				Long id = sessionUser.getId();
 				User user = userDao.findById(id).get();
 				user.setBankroll(user.getBankroll() + 2*bet);
 				userDao.save(user);
 				session.setAttribute("user", user);
 			} else if(getHandValue(dealerHand) == getHandValue(userHand)) {
-				Long id = (long) 1;
+				Long id = sessionUser.getId();
 				User user = userDao.findById(id).get();
 				user.setBankroll(user.getBankroll() + bet);
 				userDao.save(user);
@@ -187,6 +192,7 @@ public class BlackjackController {
 			testHand.add(newC);
 			System.out.println(i + ": " + newC);
 		}
+		saveToDB(testHand, sessionUser);
 		System.out.println(testHand);
 		System.out.println("gamestate stay:" + session.getAttribute("stay"));
 		return new ModelAndView("redirect:/game");
@@ -194,6 +200,7 @@ public class BlackjackController {
 	
 	@RequestMapping("/double")
 	public ModelAndView doubleDown(HttpSession session,
+			@SessionAttribute(name = "user", required = false) User sessionUser,
 			@SessionAttribute(name="deck") Deck deck,
 			@SessionAttribute(name="bet") Integer bet,
 			@SessionAttribute(name="userHand") List<Card> userHand) {
@@ -205,7 +212,7 @@ public class BlackjackController {
 		session.setAttribute("userHand", userHand);
 		Integer oldBet = (Integer) session.getAttribute("bet");
 		session.setAttribute("bet", oldBet*2);
-		Long id = (long) 1;
+		Long id = sessionUser.getId();
 		User user = userDao.findById(id).get();
 		user.setBankroll(user.getBankroll() - oldBet);
 		userDao.save(user);
@@ -230,16 +237,17 @@ public class BlackjackController {
 			@SessionAttribute(name="dealerHand") List<Card> dealerHand,
 			@SessionAttribute(name="userHand") List<Card> userHand,
 			@SessionAttribute(name="deck") Deck deck,
+			@SessionAttribute(name = "user", required = false) User sessionUser,
 			@SessionAttribute(name="bet") Integer bet) {
 			//set stay equal to surrender button visible
 			Integer oldBet = (Integer) session.getAttribute("bet");
 			session.setAttribute("bet", oldBet/2);
-			Long id = (long) 1;
+			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll(user.getBankroll() + oldBet/2);
 			userDao.save(user);
 			session.setAttribute("user", user);
-			stay(session, userHand, dealerHand, deck, 0);
+//			stay(session, userHand, dealerHand, deck, 0);
 			//Player leaves game
 		return new ModelAndView("redirect:/game");
 	}
@@ -258,6 +266,24 @@ public class BlackjackController {
 	public ModelAndView viewInstructions()	{
 		ModelAndView m = new ModelAndView("instructions");
 		return m;
+	}
+	
+	@RequestMapping("/lastHands")
+	public ModelAndView lastfive(HttpSession session,
+			@SessionAttribute(name = "user", required = false) User sessionUser) {
+		ModelAndView mv = new ModelAndView("lastfive");
+		Long id = sessionUser.getId();
+		List<Card> hand1 = handToCardList(getLastHand5(id));
+		mv.addObject("hand1", hand1);
+		List<Card> hand2 = handToCardList(getLastHand4(id));
+		mv.addObject("hand2", hand2);
+		List<Card> hand3 = handToCardList(getLastHand3(id));
+		mv.addObject("hand3", hand3);
+		List<Card> hand4 = handToCardList(getLastHand2(id));
+		mv.addObject("hand4", hand4);
+		List<Card> hand5 = handToCardList(getLastHand1(id));
+		mv.addObject("hand5", hand5);
+		return mv;
 	}
 	
 	
@@ -346,6 +372,61 @@ public class BlackjackController {
 			return true;
 		}
 
+	}
+	
+	/**
+	 * @param userHand
+	 * @param user
+	 */
+	public void saveToDB(List<Card> userHand, User user) {
+		String str = userHand.toString();
+		Long id = user.getId();
+		Hand hand = new Hand();
+		hand.setUserId(id);
+		hand.setHand(str);
+		handDao.save(hand);
+	}
+	public List<Card> handToCardList(Hand hand) {
+		List<Card> testHand = new ArrayList();
+		String str = hand.getHand();// turns hand into a single string
+//		after pulling hand from db
+		str = (str.substring(1, str.length()-1));//removes square brackets
+		String[] newStr = str.split(", ");//splits string from db into a list of strings each being a card
+		for (int i = 0; i < newStr.length; i++){//loops turning each string into a card and adding it to a haND
+			Card newC = new Card();//temp card to add to hand
+			String[] tempCard = newStr[i].split(",");//splitting card/string into a string array each string a card value
+			newC.setValue(tempCard[0]);
+			newC.setImage(tempCard[1]);
+			newC.setSuit(tempCard[2]);
+			testHand.add(newC);
+			System.out.println(i + ": " + newC);
+		}
+		return testHand;
+	}
+	
+	public Hand getLastHand5(Long id){
+		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
+		return hands.get(0);
+	}
+	
+	public Hand getLastHand4(Long id){
+		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
+		return hands.get(1);
+	}
+	
+	public Hand getLastHand3(Long id){
+		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
+		return hands.get(2);
+	}
+	
+	public Hand getLastHand2(Long id){
+		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
+		return hands.get(3);
+	}
+	
+	public Hand getLastHand1(Long id){
+		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
+		return hands.get(4);
 	}
 
 	public boolean bust(List<Card> hand) {

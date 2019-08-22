@@ -13,12 +13,10 @@ import javax.persistence.Table;
 public class Hand {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long handId;
 	private Long userId;
 	private String value;
-	private String image;
-	private String suit;
+	private String hand;
 
 	
 	public String getValue() {
@@ -26,18 +24,6 @@ public class Hand {
 	}
 	public void setValue(String value) {
 		this.value = value;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-	public String getSuit() {
-		return suit;
-	}
-	public void setSuit(String suit) {
-		this.suit = suit;
 	}
 //	public String getCard() {
 //		return card;
@@ -146,5 +132,11 @@ public class Hand {
 		}else {
 			return false;
 		}
+	}
+	public String getHand() {
+		return hand;
+	}
+	public void setHand(String hand) {
+		this.hand = hand;
 	}
 }
