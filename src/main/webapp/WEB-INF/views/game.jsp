@@ -20,7 +20,7 @@
 			<table id="dealerHand">
 				<thead>
 					<tr>
-						<c:forEach items="${dealerHand}" var="item" varStatus="loop">
+						<c:forEach items="${gamestate.getDealerHand()}" var="item" varStatus="loop">
 						    <c:if test="${loop.first && stay != 5}">
 						        <th><img class="backside" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSVhzvnISkrvxN3Mg7uFbwKSmzg-EzcfNjnKKb5Sf90Rm8U5vd" /></th>
 						    </c:if>
@@ -80,7 +80,7 @@
 			<table id="playerHand">
 				<thead>
 					<tr>
-						<c:forEach var="each" items="${userHand}">
+						<c:forEach var="each" items="${gamestate.getHands().get(0)}">
 							<th><img src="${each.image }" /></th>
 						</c:forEach>
 
