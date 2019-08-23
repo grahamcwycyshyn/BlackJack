@@ -66,6 +66,7 @@ public class BlackjackController {
 		user.setBankroll((long) 500);
 		user.setWins((int) 0);
 		user.setLosses((int) 0);
+		user.setWinLoss((double) 0 );
 		userDao.save(user);
 		List<User> users = new ArrayList<>();
 		users.add(user);
@@ -107,6 +108,7 @@ public class BlackjackController {
 			User user = userDao.findById(id).get();
 			user.setBankroll((user.getBankroll() - bet));
 			user.setLosses(user.getLosses() + 1);
+			user.setWinLoss(user.getWinLoss()  );
 			userDao.save(user);
 			session.setAttribute("gamestate", gamestate.getUsers().set(0, user));
 		}
