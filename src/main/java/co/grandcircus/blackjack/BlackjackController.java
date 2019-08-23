@@ -54,7 +54,11 @@ public class BlackjackController {
 
 	@RequestMapping("/login-confirmation")
 	public ModelAndView submitSignup(User user, HttpSession session) {
+		Long id = user.getId();
+		//User user = userDao.findById(id).get();
 		user.setBankroll((long) 500);
+		user.setWins((int) 0);
+		user.setLosses((int) 0);
 		userDao.save(user);
 		session.setAttribute("user", user);
 		ModelAndView mv = new ModelAndView("welcome");
@@ -65,8 +69,13 @@ public class BlackjackController {
 	public ModelAndView deal(HttpSession session, 
 			@SessionAttribute(name = "deck", required = false) Deck deck,
 			@SessionAttribute(name = "user", required = false) User sessionUser,
-			@RequestParam("betDeal") Integer bet) {
+			@RequestParam("betDeal") Integer bet ){
+			
+			
 		session.setAttribute("bet", bet);
+
+
+		
 		if(deck.getRemaining() <= 12) {
 			deck = a.shuffle(deck);
 		}
@@ -80,6 +89,7 @@ public class BlackjackController {
 			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll((long) (user.getBankroll() + 1.5*bet));
+			user.setWins(user.getWins()+1);
 			userDao.save(user);
 			session.setAttribute("user", user);
 			stay(session, userHand, dealerHand, deck, 0, user);
@@ -87,6 +97,7 @@ public class BlackjackController {
 			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll((user.getBankroll() - bet));
+			user.setLosses(user.getLosses() + 1);
 			userDao.save(user);
 			session.setAttribute("user", user);
 		}
@@ -145,6 +156,7 @@ public class BlackjackController {
 			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll(user.getBankroll() + 2*bet);
+			user.setWins(user.getWins()+ 1);
 			userDao.save(user);
 			session.setAttribute("user", user);
 			session.setAttribute("dealerHandValue", "BUST");
@@ -154,6 +166,7 @@ public class BlackjackController {
 				Long id = sessionUser.getId();
 				User user = userDao.findById(id).get();
 				user.setBankroll(user.getBankroll() + 2*bet);
+				user.setWins(user.getWins()+ 1);
 				userDao.save(user);
 				session.setAttribute("user", user);
 			} else if(getHandValue(dealerHand) == getHandValue(userHand)) {
@@ -203,6 +216,7 @@ public class BlackjackController {
 				Long id = sessionUser.getId();
 				User user = userDao.findById(id).get();
 				user.setBankroll(user.getBankroll() + 2*bet);
+				user.setWins(user.getWins()+ 1);
 				userDao.save(user);
 				session.setAttribute("user", user);
 			} else if(getHandValue(dealerHand) == getHandValue(userHand)) {
@@ -276,6 +290,7 @@ public class BlackjackController {
 			Long id = sessionUser.getId();
 			User user = userDao.findById(id).get();
 			user.setBankroll(user.getBankroll() + oldBet/2);
+			user.setLosses(user.getLosses() + 1);
 			userDao.save(user);
 			session.setAttribute("user", user);
 			stay(session, userHand, dealerHand, deck, 0, user);
@@ -347,6 +362,7 @@ public class BlackjackController {
 		return testHand;
 	}
 	
+
 	public Hand getLastHand5(Long id){
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);//grabs the last 5 hands from table
 		return hands.get(0);//returns the most recent hand
@@ -371,6 +387,40 @@ public class BlackjackController {
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
 		return hands.get(4);
 	}
+
+//	@RequestMapping("/lastHands")
+//	public ModelAndView lastfive(HttpSession session,
+//			@SessionAttribute(name = "user", required = false) User sessionUser,
+//			@SessionAttribute(name = "hand", required = false) Hand sessionHand) {
+//		ModelAndView mv = new ModelAndView("lastfive");
+//		Long id = sessionUser.getId();//grabs user id from the session
+//		Long dealer_id = sessionHand.getHandId(); //grabs hand id from the session
+//		List<Card> hand1 = handToCardList(getLastHand5(id));//creates the list of cards of the most recent hand
+//		List<Card> dealerhand1 = handToCardList(getLastHand5(dealer_id));
+//		mv.addObject("hand1", hand1);//adds it to the model and view
+//		mv.addObject("dealerhand1", dealerhand1);
+//		List<Card> hand2 = handToCardList(getLastHand4(id));
+//		List<Card> dealerhand2 = handToCardList(getLastHand4(dealer_id));
+//		mv.addObject("hand2", hand2);
+//		mv.addObject("dealerhand2", dealerhand2);
+//		List<Card> hand3 = handToCardList(getLastHand3(id));
+//		List<Card> dealerhand3 = handToCardList(getLastHand3(dealer_id));
+//		mv.addObject("hand3", hand3);
+//		mv.addObject("dealerhand3", dealerhand3);
+//		List<Card> hand4 = handToCardList(getLastHand2(id));
+//		List<Card> dealerhand4 = handToCardList(getLastHand2(dealer_id));
+//		mv.addObject("hand4", hand4);
+//		mv.addObject("dealerhand4", dealerhand4);
+//		List<Card> hand5 = handToCardList(getLastHand1(id));
+//		List<Card> dealerhand5 = handToCardList(getLastHand1(dealer_id));
+//		mv.addObject("hand5", hand5);
+//		mv.addObject("dealerhand5", dealerhand5);
+//		return mv;
+//	}
+//	
+//	
+//	
+
 
 	public boolean bust(List<Card> hand) {
 		if (getHandValue(hand) > 21) {

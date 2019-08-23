@@ -6,6 +6,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>BlackJack Instructions</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" />
 </head>
 <body>
 
@@ -66,6 +68,9 @@
 	 
 	
 	</div>
+	<tr>
+				<a href="/login-confirmation"><button type="button" class="btn btn-primary">Back</button></a>
+			</tr>
 	
 	
 

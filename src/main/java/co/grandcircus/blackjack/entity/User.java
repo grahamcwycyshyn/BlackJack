@@ -18,13 +18,13 @@ public class User implements Serializable{
 	private Long id;
 	private String name;
 	private Long bankroll;
-	private int wins;
-	private int losses;
+	private Integer wins;
+	private Integer losses;
 	private Long highestPayout;
-	private double winLoss;
+	private Double winLoss;
 	
 	
-	public void setWinLoss(double winLoss) {
+	public void setWinLoss(Double winLoss) {
 		this.winLoss = winLoss;
 	}
 	public Long getId() {
@@ -48,13 +48,13 @@ public class User implements Serializable{
 	public int getWins() {
 		return wins;
 	}
-	public void setWins(int wins) {
+	public void setWins(Integer wins) {
 		this.wins = wins;
 	}
 	public int getLosses() {
 		return losses;
 	}
-	public void setLosses(int losses) {
+	public void setLosses(Integer losses) {
 		this.losses = losses;
 	}
 	public Long getHighestPayout() {
@@ -64,7 +64,7 @@ public class User implements Serializable{
 		this.highestPayout = highestPayout;
 	}
 	public double getWinLoss() {
-		return wins/losses;
+		return winLoss;
 	}
 	
 

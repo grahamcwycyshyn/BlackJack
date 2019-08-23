@@ -6,10 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <link href="/login-form.css" rel="stylesheet" />
+
+<link href="/login.css" rel="stylesheet" />
+
 </head>
 <body>
-<h1>Log in</h1>
+<h1>Blackjack Log In</h1>
 	
 	<c:if test="${ not empty message }">
 		<p class="message">${ message }</p>
@@ -18,12 +22,12 @@
 	<form action="/login-confirmation" method="post" autocomplete="off" >
 	
 	<p>
-		<label>Name</label> <input type="name" name="name" required />
+		<strong><label>Name</label></strong> <input type="name" name="name" required />
 	</p>
 	
 	
 	<p>
-		<button type="submit">Log in</button>
+		<button type="submit">Submit</button>
 	</p>
 	
 	
