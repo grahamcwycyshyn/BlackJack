@@ -64,6 +64,7 @@ public class BlackjackController {
 		user.setBankroll((long) 500);
 		user.setWins((int) 0);
 		user.setLosses((int) 0);
+		user.setWinLoss((double) 0 );
 		userDao.save(user);
 		List<User> users = new ArrayList<>();
 		users.add(user);
@@ -112,6 +113,32 @@ public class BlackjackController {
 		List<Card> dealerHand = new ArrayList<>();
 		dealerHand.add(a.getCard(gamestate.getDeck().getId()));
 		dealerHand.add(a.getCard(gamestate.getDeck().getId()));
+//<<<<<<< HEAD
+//=======
+//		List<Card> userHand = new ArrayList<>();
+//		userHand.add(a.getCard(gamestate.getDeck().getId()));
+//		userHand.add(a.getCard(gamestate.getDeck().getId()));
+//		if(getHandValue(userHand) == 21) {
+//			Long id = gamestate.getUsers().get(0).getId();
+//			User user = userDao.findById(id).get();
+//			user.setBankroll((long) (user.getBankroll() + 1.5*bet));
+//			user.setWins(user.getWins()+1);
+//			userDao.save(user);
+//			stay(session, gamestate);
+//		}  else {
+//			Long id = gamestate.getUsers().get(0).getId();
+//			User user = userDao.findById(id).get();
+//			user.setBankroll((user.getBankroll() - bet));
+//			user.setLosses(user.getLosses() + 1);
+//			user.setWinLoss(user.getWinLoss()  );
+//			userDao.save(user);
+//			session.setAttribute("gamestate", gamestate.getUsers().set(0, user));
+//		}
+//		List<List<Card>> hands = new ArrayList<>();
+//		hands.add(userHand);
+//		gamestate.setHands(hands);
+//		session.setAttribute("gamestate", gamestate);
+//>>>>>>> e511ca10e40f6e7f314ac313a1f0c2dca2fde796
 		gamestate.setDealerHand(dealerHand);
 		for (int i = 0; i < gamestate.getUsers().size(); i++) {
 			if(gamestate.getHands() == null) {
