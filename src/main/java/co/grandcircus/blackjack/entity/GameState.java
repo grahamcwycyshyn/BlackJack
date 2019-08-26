@@ -1,18 +1,25 @@
 package co.grandcircus.blackjack.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GameState {
+public class GameState implements Serializable{
 
 	private Deck deck;
 	private List<Card> dealerHand;
 	private List<User> users;
 	private List<List<Card>> hands;
+	private List<Integer> handValues;
 	private List<Integer> bets;
+	private List<Boolean> turn;
 	private Integer handIndex;
 	
-	
-	
+	public List<Boolean> getTurn() {
+		return turn;
+	}
+	public void setTurn(List<Boolean> turn) {
+		this.turn = turn;
+	}
 	public List<Integer> getBets() {
 		return bets;
 	}
@@ -48,6 +55,12 @@ public class GameState {
 	}
 	public void setHandIndex(Integer handIndex) {
 		this.handIndex = handIndex;
+	}
+	public List<Integer> getHandValues() {
+		return handValues;
+	}
+	public void setHandValues(List<Integer> handValues) {
+		this.handValues = handValues;
 	}
 	
 	

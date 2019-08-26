@@ -77,10 +77,11 @@
 			</c:if>
 		</div>
 		<div class="inside">
+		<c:forEach var="hand" items="${ gamestate.getHands() }">
 			<table id="playerHand">
 				<thead>
 					<tr>
-						<c:forEach var="each" items="${gamestate.getHands().get(0)}">
+						<c:forEach var="each" items="${ hand }">
 							<th><img src="${each.image }" /></th>
 						</c:forEach>
 
@@ -88,12 +89,13 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>Value: ${userHandValue}</td>
-
+						<c:forEach var="value" items="${ gamestate.getHandValues() }">
+						<td>Value: ${ value }</td>
+						</c:forEach>
 					</tr>
 				</tbody>
 			</table>
-			
+			</c:forEach>
 			<c:if test="${stay == 1||stay == 2||stay == 3}">
 				<a href="/hit"><button>Hit</button></a>
 			</c:if>
@@ -111,6 +113,7 @@
 		</div>
 	</div>
 	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
+	<a href="/join"><button type="button">Join</button></a>
 	
 </body>
 </html>
