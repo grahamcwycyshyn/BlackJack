@@ -1,14 +1,39 @@
 @charset "ISO-8859-1";
 
 body{
-	background-image: url("Blackjack_1.jpeg");
+	background-image: url("Blackjack_6.jpeg");
 	background-repeat: no-repeat;
-	background-size: 125% 425%;
+	background-size: 115% 250%;
 	
 	
 }
 
-input{
-	border: 2px solid black;
-	border-radius: 2px;
+label{
+	color: white;
 }
+
+
+h1{
+	color: white;
+}
+
+input{
+	display: inline-block;
+	width: 25%;
+	margin: 8px 0;
+	padding: 14px 20px;
+	box-sizing: border-box;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 25%;

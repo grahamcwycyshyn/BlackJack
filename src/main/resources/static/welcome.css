@@ -1,12 +1,23 @@
 @charset "ISO-8859-1";
 
 body{
-	background-image: url("Blackjack_1.jpeg");
+	background-image: url("Blackjack_6.jpeg");
 	background-repeat: no-repeat;
-	background-size: 125% 425%;
-	
-	
+	background-size: 115% 300%;
 	
 }
+
+h1{
+	color: white;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 25%;
 
 
