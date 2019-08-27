@@ -121,6 +121,7 @@
 	</div>
 	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
 	<a href="/join"><button type="button">Join</button></a>
+	<a href="/winLeader"><button type="button" class="btn btn-primary">Leaderboard</button></a>
 	
 </body>
 </html>

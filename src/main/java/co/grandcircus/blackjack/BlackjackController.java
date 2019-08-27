@@ -344,6 +344,16 @@ public class BlackjackController {
 		ModelAndView m = new ModelAndView("instructions");
 		return m;
 	}
+	
+	@RequestMapping("/winLeader")
+	public ModelAndView winleader(@RequestParam ("id") Long id) {
+		List<User> winuser = new ArrayList<>();
+		ModelAndView mv = new ModelAndView("winsLeaderBoard");
+		mv.addObject("name", winuser);
+		mv.addObject("win", winuser);
+		mv.addObject("losses", winuser);
+		return mv;
+	}
 
 	@RequestMapping("/lastHands")
 	public ModelAndView lastfive(HttpSession session,
