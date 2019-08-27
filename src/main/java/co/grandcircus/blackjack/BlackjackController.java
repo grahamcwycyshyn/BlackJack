@@ -352,7 +352,8 @@ public class BlackjackController {
 		User user = userDao.findById(id).get();
 		user.setBankroll(user.getBankroll() - oldBet);
 		userDao.save(user);
-		gamestate.getUsers().set(0, user);
+		//this resets the user in the session
+//		gamestate.getUsers().set(0, user);
 		session.setAttribute("gamestate", gamestate);
 		if (bust(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()) == false) {
 //			session.setAttribute("userHandValue", getHandValue(userHand));
