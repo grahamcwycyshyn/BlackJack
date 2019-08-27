@@ -107,11 +107,12 @@ public class BlackjackController {
 		gamestate.getBets().set(gamestate.getHandIndex(), bet);
 //		gamestate.getBets().set(gamestate.getUsers().size() - gamestate.getHandIndex() -1, bet);
 		System.out.println(gamestate.getHandIndex());
+		
+//		Long id = gamestate.getUsers().get(gamestate.getHandIndex()).getId();
+//		User user = userDao.findById(id).get();
+//		user.setBankroll((user.getBankroll() - bet));
+//		userDao.save(user);
 		gamestate.setHandIndex(gamestate.getHandIndex() - 1);
-		Long id = gamestate.getUsers().get(gamestate.getHandIndex()).getId();
-		User user = userDao.findById(id).get();
-		user.setBankroll((user.getBankroll() - bet));
-		userDao.save(user);
 		session.setAttribute("gamestate", gamestate);
 		return new ModelAndView("redirect:/game");
 	}
