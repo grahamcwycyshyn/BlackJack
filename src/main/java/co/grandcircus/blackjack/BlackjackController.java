@@ -216,7 +216,15 @@ public class BlackjackController {
 		session.setAttribute("gamestate", gamestate);
 		if (bust(userHand.getCards()) == true || getHandValue(userHand.getCards()) == 21) {
 			stay(session, gamestate);
+//		if (bust(userHand.getCards()) == true) {
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);
+////			user.setLosses(user.getLosses() + 1);
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+//			user.setBankroll((user.getBankroll() - gamestate.getBets().get(i)));
+//			userDao.save(user);
 		}
+		 
+		
 //			session.setAttribute("stay", 1);
 //		}
 //			if (getHandValue(userHand) == 21) {

@@ -14,7 +14,7 @@
 	
 	
 	
-	  <a href="/game?id=${ deck.id }"><button>Play!</button></a> 
+	  <a href="/game?id=${ deck.id }"><button autofocus>Play!</button></a> 
 	  
 	  <p><div><a href="/instructions"><button>Instructions</button></a></div>
   
