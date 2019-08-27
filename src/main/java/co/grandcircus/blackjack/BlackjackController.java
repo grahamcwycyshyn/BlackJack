@@ -165,6 +165,7 @@ public class BlackjackController {
 				user.setBankroll((long) (user.getBankroll() + 1.5 * gamestate.getBets().get(i)));
 				user.setWins(user.getWins() + 1);
 				userDao.save(user);
+				gamestate.getUsers().get(i).setBankroll(user.getBankroll());
 //				stay(session, gamestate);
 			} else {
 				Long id = gamestate.getUsers().get(i).getId();
@@ -172,7 +173,7 @@ public class BlackjackController {
 				user.setBankroll((user.getBankroll() - gamestate.getBets().get(i)));
 //				user.setLosses(user.getLosses() + 1);
 				userDao.save(user);
-				gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+				gamestate.getUsers().get(i).setBankroll(user.getBankroll());
 			}
 //		List<List<Card>> hands = new ArrayList<>();
 //		hands.add(userHand);
@@ -254,6 +255,7 @@ public class BlackjackController {
 					user.setBankroll(user.getBankroll() + 2 * gamestate.getBets().get(i));
 					user.setWins(user.getWins() + 1);
 					userDao.save(user);
+					gamestate.getUsers().get(i).setBankroll(user.getBankroll());
 //					gamestate.getUsers().set(i, user);
 					session.setAttribute("gamestate", gamestate);
 				} else if (bust(gamestate.getDealerHand()) == false && bust(gamestate.getUsers().get(i).getHands().get(0).getCards()) == false) {
@@ -263,6 +265,7 @@ public class BlackjackController {
 						user.setBankroll(user.getBankroll() + 2 * gamestate.getBets().get(i));
 						user.setWins(user.getWins() + 1);
 						userDao.save(user);
+						gamestate.getUsers().get(i).setBankroll(user.getBankroll());
 //						gamestate.getUsers().set(i, user);
 						session.setAttribute("gamestate", gamestate);
 					} else if (getHandValue(gamestate.getDealerHand()) == getHandValue(gamestate.getUsers().get(i).getHands().get(0).getCards())) {
@@ -270,6 +273,7 @@ public class BlackjackController {
 						User user = userDao.findById(id).get();
 						user.setBankroll(user.getBankroll() + gamestate.getBets().get(i));
 						userDao.save(user);
+						gamestate.getUsers().get(i).setBankroll(user.getBankroll());
 //						gamestate.getUsers().set(i, user);
 						session.setAttribute("gamestate", gamestate);
 					}
