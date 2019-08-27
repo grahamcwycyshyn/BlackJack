@@ -8,16 +8,25 @@ body{
 }
 
 h1{
-	color: white;
+	color: green;
+	text: bold;
+	font-style: normal;
 }
 
 button {
   background-color: #4CAF50;
-  color: white;
+  color: black;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
   width: 25%;
+  text: bold;
+}
 
+h1 {
+	color: green;
+	text: bold;
+	font-style: normal;
+}
 

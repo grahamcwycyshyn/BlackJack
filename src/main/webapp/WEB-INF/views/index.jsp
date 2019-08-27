@@ -26,7 +26,7 @@
 		<strong><label>Name</label></strong>
 	</p>
 	<p>
-		<input type="text" placeholder="Enter name" name="name" required>
+		<input type="text" placeholder="Enter name" name="name" required autofocus>
 	</p>
 	
 	
