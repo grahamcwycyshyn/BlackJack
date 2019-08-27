@@ -385,6 +385,7 @@ public class BlackjackController {
 		user.setBankroll(user.getBankroll() + oldBet / 2);
 		user.setLosses(user.getLosses() + 1);
 		userDao.save(user);
+		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
 //		gamestate.getUsers().set(0, user);
 		session.setAttribute("gamestate", gamestate);
 		stay(session, gamestate);
