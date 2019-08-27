@@ -1,6 +1,7 @@
 package co.grandcircus.blackjack.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,8 +23,15 @@ public class User implements Serializable{
 	private Integer losses;
 	private Long highestPayout;
 	private Double winLoss;
+	transient List<Hand> hands;
 	
 	
+	public List<Hand> getHands() {
+		return hands;
+	}
+	public void setHands(List<Hand> hands) {
+		this.hands = hands;
+	}
 	public void setWinLoss(Double winLoss) {
 		this.winLoss = winLoss;
 	}

@@ -8,11 +8,11 @@ public class GameState implements Serializable{
 	private Deck deck;
 	private List<Card> dealerHand;
 	private List<User> users;
-	private List<List<Card>> hands;
+	private List<Hand> hands;
 	private List<Integer> handValues;
 	private List<Integer> bets;
 	private List<Boolean> turn;
-	private Integer handIndex;
+	private Integer userIndex;
 	
 	public List<Boolean> getTurn() {
 		return turn;
@@ -44,17 +44,17 @@ public class GameState implements Serializable{
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	public List<List<Card>> getHands() {
+	public List<Hand> getHands() {
 		return hands;
 	}
-	public void setHands(List<List<Card>> hands) {
+	public void setHands(List<Hand> hands) {
 		this.hands = hands;
 	}
-	public Integer getHandIndex() {
-		return handIndex;
+	public Integer getUserIndex() {
+		return userIndex;
 	}
-	public void setHandIndex(Integer handIndex) {
-		this.handIndex = handIndex;
+	public void setUserIndex(Integer userIndex) {
+		this.userIndex = userIndex;
 	}
 	public List<Integer> getHandValues() {
 		return handValues;

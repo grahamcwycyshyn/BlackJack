@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Transient;
+
 @Entity
 @Table(name = "hand")
 public class Hand {
@@ -17,8 +19,25 @@ public class Hand {
 	private Long userId;
 	private String value;
 	private String hand;
-
+	transient List<Card> cards;
+	transient int handValue;
 	
+
+
+	public int getHandValue() {
+		return handValue;
+	}
+	public void setHandValue(int handValue) {
+		this.handValue = handValue;
+	}
+	@Transient
+	public List<Card> getCards() {
+		return cards;
+	}
+	@Transient
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}
 	public String getValue() {
 		return value;
 	}

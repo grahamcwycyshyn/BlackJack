@@ -68,7 +68,7 @@ public class BlackjackController {
 		users.add(user);
 //		gamestate.getTurn().set(0, false);
 		gamestate.setUsers(users);
-		gamestate.setHandIndex(0);
+		gamestate.setUserIndex(0);
 		List<Integer> bets = new ArrayList<>();
 		bets.add(5);
 		gamestate.setBets(bets);
@@ -88,9 +88,9 @@ public class BlackjackController {
 		userDao.save(user);
 		gamestate.getUsers().add(user);
 		gamestate.getBets().add(5);
-		gamestate.setHandIndex(gamestate.getHandIndex() + 1);
+		gamestate.setUserIndex(gamestate.getUserIndex() + 1);
 		session.setAttribute("gamestate", gamestate);
-		System.out.println(gamestate.getHandIndex());
+		System.out.println(gamestate.getUserIndex());
 		return new ModelAndView("redirect:/game");
 	}
 
@@ -104,15 +104,15 @@ public class BlackjackController {
 	@RequestMapping("/next")
 	public ModelAndView next(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
 			@RequestParam("betDeal") Integer bet) {
-		gamestate.getBets().set(gamestate.getHandIndex(), bet);
-//		gamestate.getBets().set(gamestate.getUsers().size() - gamestate.getHandIndex() -1, bet);
-		System.out.println(gamestate.getHandIndex());
+		gamestate.getBets().set(gamestate.getUserIndex(), bet);
+//		gamestate.getBets().set(gamestate.getUsers().size() - gamestate.getUserIndex() -1, bet);
+		System.out.println(gamestate.getUserIndex());
 		
-//		Long id = gamestate.getUsers().get(gamestate.getHandIndex()).getId();
+//		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
 //		User user = userDao.findById(id).get();
 //		user.setBankroll((user.getBankroll() - bet));
 //		userDao.save(user);
-		gamestate.setHandIndex(gamestate.getHandIndex() - 1);
+		gamestate.setUserIndex(gamestate.getUserIndex() - 1);
 		session.setAttribute("gamestate", gamestate);
 		return new ModelAndView("redirect:/game");
 	}
@@ -120,7 +120,7 @@ public class BlackjackController {
 	@RequestMapping("/deal")
 	public ModelAndView deal(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate,
 			@RequestParam("betDeal") Integer bet) {
-		gamestate.setHandIndex(gamestate.getUsers().size() - 1);
+		gamestate.setUserIndex(gamestate.getUsers().size() - 1);
 		gamestate.getBets().set(0, bet);
 		session.setAttribute("gamestate", gamestate);
 		if (gamestate.getDeck().getRemaining() <= 12) {
@@ -133,25 +133,33 @@ public class BlackjackController {
 		dealerHand.add(a.getCard(gamestate.getDeck().getId()));
 		dealerHand.add(a.getCard(gamestate.getDeck().getId()));
 		gamestate.setDealerHand(dealerHand);
+		List<User> users = gamestate.getUsers();
 		for (int i = 0; i < gamestate.getUsers().size(); i++) {
-			if (gamestate.getHands() == null) {
-				List<List<Card>> list = new ArrayList<>();
-				list.add(dealHand(session, gamestate));
-				gamestate.setHands(list);
-				List<Integer> values = new ArrayList<>();
-				values.add(getHandValue(list.get(0)));
-				gamestate.setHandValues(values);
-			} else if (gamestate.getHands().size() < gamestate.getUsers().size()) {
-				List<Card> list = dealHand(session, gamestate);
-				gamestate.getHands().add(list);
-				Integer value = getHandValue(list);
-				gamestate.getHandValues().add(value);
-			} else {
-				List<Card> list = dealHand(session, gamestate);
-				gamestate.getHands().set(i, list);
-				gamestate.getHandValues().set(i, getHandValue(list));
-			}
-			if (getHandValue(gamestate.getHands().get(i)) == 21) {
+//			if(gamestate.getHands() == null) {
+				Hand hand = new Hand();//new hand made
+				hand.setCards(dealHand(session, gamestate));//deals hand
+				hand.setHandValue(getHandValue(hand.getCards()));
+				List<Hand> hands = new ArrayList<Hand>();//new empty list of hands
+				hands.add(hand);//adds fresh dealt hand to list
+				users.get(i).setHands(hands);//Adds list of hands to the first user
+				gamestate.setUsers(users);
+//				List<Hand> list = new ArrayList<>();
+				gamestate.setHands(hands);
+//			} else if(gamestate.getHands().size() < gamestate.getUsers().size()) {
+//				Hand hand = new Hand();//new hand made
+//				hand.setCards(dealHand(session, gamestate));//deals hand
+//				hand.setHandValue(getHandValue(hand.getCards()));
+//				List<Hand> hands = new ArrayList<Hand>();//new empty list of hands
+//				hands.add(hand);//adds fresh dealt hand to list
+//				users.get(i).setHands(hands);//Adds list of hands to the first user
+//				List<Hand> list = new ArrayList<>();
+//				gamestate.setHands(hands);
+//			} else {
+//				List<Card> list = dealHand(session, gamestate);
+//				gamestate.getHands().set(i, list);
+//				gamestate.getHandValues().set(i, getHandValue(list));
+//			}
+			if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
 				Long id = gamestate.getUsers().get(i).getId();
 				User user = userDao.findById(id).get();
 				user.setBankroll((long) (user.getBankroll() + 1.5 * gamestate.getBets().get(i)));
@@ -164,18 +172,19 @@ public class BlackjackController {
 				user.setBankroll((user.getBankroll() - gamestate.getBets().get(i)));
 //				user.setLosses(user.getLosses() + 1);
 				userDao.save(user);
-				session.setAttribute("gamestate", gamestate.getUsers().set(i, user));
+				gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
 			}
 //		List<List<Card>> hands = new ArrayList<>();
 //		hands.add(userHand);
 //		gamestate.setHands(hands);
+			
 			session.setAttribute("gamestate", gamestate);
-			session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
-			session.setAttribute("stay", 0);
-			if (gamestate.getHands().get(i).get(0).getValue()
-					.equalsIgnoreCase(gamestate.getHands().get(i).get(1).getValue())) {
+//			session.setAttribute("userHandValue", getHandValue(users.get(i).getHands().get(0).getCards()));
+//			session.setAttribute("stay", 0);
+			if (users.get(i).getHands().get(i).getCards().get(0).getValue()
+					.equalsIgnoreCase(users.get(i).getHands().get(i).getCards().get(1).getValue())) {
 				session.setAttribute("stay", 3);
-			} else if (getHandValue(gamestate.getHands().get(i)) == 21) {
+			} else if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
 				session.setAttribute("stay", 5);
 			} else {
 				session.setAttribute("stay", 2);
@@ -192,16 +201,20 @@ public class BlackjackController {
 			gamestate.setDeck(deck);
 			session.setAttribute("gamestate", gamestate);
 		}
-		List<Card> userHand = gamestate.getHands().get(gamestate.getHandIndex() );
-		userHand.add(a.getCard(gamestate.getDeck().getId()));
-		gamestate.getHands().set(gamestate.getHandIndex(), userHand);
-		gamestate.getHandValues().set(gamestate.getHandIndex(), getHandValue(userHand));
+		List<User> users = gamestate.getUsers();
+		List<Hand> userHands = users.get(gamestate.getUserIndex()).getHands();
+		Hand userHand = userHands.get(0);//get is set to zero because there is only one hand
+		userHand.getCards().add(a.getCard(gamestate.getDeck().getId()));
+		userHand.setHandValue(getHandValue(userHand.getCards()));
+        userHands.set(0, userHand);//0 brecause there is only one hand
+		users.get(gamestate.getUserIndex()).setHands(userHands);;
+		gamestate.getHands().set(gamestate.getUserIndex(), userHand);
 //		List<List<Card>> hands = new ArrayList<>();
 //		hands.add(userHand);
 //		gamestate.setHands(hands);
 //		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
 		session.setAttribute("gamestate", gamestate);
-		if (bust(userHand) == true || getHandValue(userHand) == 21) {
+		if (bust(userHand.getCards()) == true || getHandValue(userHand.getCards()) == 21) {
 			stay(session, gamestate);
 		}
 //			session.setAttribute("stay", 1);
@@ -219,15 +232,15 @@ public class BlackjackController {
 	public ModelAndView stay(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
 
 		
-		if (gamestate.getHandIndex() == 0) {
+		if (gamestate.getUserIndex() == 0) {
 			session.setAttribute("stay", 5);
-			gamestate.setHandIndex(gamestate.getUsers().size() - 1);
+			gamestate.setUserIndex(gamestate.getUsers().size() - 1);
 			while (dealerHit(gamestate.getDealerHand()) == true) {
 				gamestate.getDealerHand().add(a.getCard(gamestate.getDeck().getId()));
 			}
 			session.setAttribute("dealerHandValue", getHandValue(gamestate.getDealerHand()));
 			for (int i = 0; i < gamestate.getHands().size(); i++) {
-				if (bust(gamestate.getDealerHand()) == true && bust(gamestate.getHands().get(i)) == false) {
+				if (bust(gamestate.getDealerHand()) == true && bust(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(i).getCards()) == false) {
 					Long id = gamestate.getUsers().get(i).getId();
 					User user = userDao.findById(id).get();
 					user.setBankroll(user.getBankroll() + 2 * gamestate.getBets().get(i));
@@ -235,8 +248,8 @@ public class BlackjackController {
 					userDao.save(user);
 					gamestate.getUsers().set(i, user);
 					session.setAttribute("gamestate", gamestate);
-				} else if (bust(gamestate.getDealerHand()) == false && bust(gamestate.getHands().get(i)) == false) {
-					if (getHandValue(gamestate.getDealerHand()) < getHandValue(gamestate.getHands().get(i))) {
+				} else if (bust(gamestate.getDealerHand()) == false && bust(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(i).getCards()) == false) {
+					if (getHandValue(gamestate.getDealerHand()) < getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(i).getCards())) {
 						Long id = gamestate.getUsers().get(i).getId();
 						User user = userDao.findById(id).get();
 						user.setBankroll(user.getBankroll() + 2 * gamestate.getBets().get(i));
@@ -244,7 +257,7 @@ public class BlackjackController {
 						userDao.save(user);
 						gamestate.getUsers().set(i, user);
 						session.setAttribute("gamestate", gamestate);
-					} else if (getHandValue(gamestate.getDealerHand()) == getHandValue(gamestate.getHands().get(i))) {
+					} else if (getHandValue(gamestate.getDealerHand()) == getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(i).getCards())) {
 						Long id = gamestate.getUsers().get(i).getId();
 						User user = userDao.findById(id).get();
 						user.setBankroll(user.getBankroll() + gamestate.getBets().get(i));
@@ -255,7 +268,7 @@ public class BlackjackController {
 				}
 			}
 		} else {
-			gamestate.setHandIndex(gamestate.getHandIndex()-1);
+			gamestate.setUserIndex(gamestate.getUserIndex()-1);
 			session.setAttribute("gamestate", gamestate);
 		}
 		List<Card> testHand = new ArrayList<>();// New hand from db
@@ -276,39 +289,39 @@ public class BlackjackController {
 		return new ModelAndView("redirect:/game");
 	}
 
-	@RequestMapping("/double")
-	public ModelAndView doubleDown(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
-		if (gamestate.getDeck().getRemaining() <= 12) {
-			Deck deck = gamestate.getDeck();
-			a.shuffle(deck);
-			gamestate.setDeck(deck);
-			session.setAttribute("gamestate", gamestate);
-		}
-		gamestate.getHands().get(0).add(a.getCard(gamestate.getDeck().getId()));
-		session.setAttribute("gamestate", gamestate);
-		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
-		Integer oldBet = gamestate.getBets().get(0);
-		gamestate.getBets().set(0, oldBet * 2);
-		Long id = gamestate.getUsers().get(0).getId();
-		User user = userDao.findById(id).get();
-		user.setBankroll(user.getBankroll() - oldBet);
-		userDao.save(user);
-		gamestate.getUsers().set(0, user);
-		session.setAttribute("gamestate", gamestate);
-		if (bust(gamestate.getHands().get(0)) == false) {
-//			session.setAttribute("userHandValue", getHandValue(userHand));
-			session.setAttribute("stay", 4);
-
-			if (getHandValue(gamestate.getHands().get(0)) == 21) {
-				session.setAttribute("stay", 4);
-			}
-		} else {
-//			session.setAttribute("userHandValue", "BUST!");
-			session.setAttribute("stay", 5);
-		}
-		stay(session, gamestate);
-		return new ModelAndView("redirect:/game");
-	}
+//	@RequestMapping("/double")
+//	public ModelAndView doubleDown(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
+//		if (gamestate.getDeck().getRemaining() <= 12) {
+//			Deck deck = gamestate.getDeck();
+//			a.shuffle(deck);
+//			gamestate.setDeck(deck);
+//			session.setAttribute("gamestate", gamestate);
+//		}
+//		gamestate.getHands().get(0).add(a.getCard(gamestate.getDeck().getId()));
+//		session.setAttribute("gamestate", gamestate);
+//		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
+//		Integer oldBet = gamestate.getBets().get(0);
+//		gamestate.getBets().set(0, oldBet * 2);
+//		Long id = gamestate.getUsers().get(0).getId();
+//		User user = userDao.findById(id).get();
+//		user.setBankroll(user.getBankroll() - oldBet);
+//		userDao.save(user);
+//		gamestate.getUsers().set(0, user);
+//		session.setAttribute("gamestate", gamestate);
+//		if (bust(gamestate.getHands().get(0)) == false) {
+////			session.setAttribute("userHandValue", getHandValue(userHand));
+//			session.setAttribute("stay", 4);
+//
+//			if (getHandValue(gamestate.getHands().get(0)) == 21) {
+//				session.setAttribute("stay", 4);
+//			}
+//		} else {
+////			session.setAttribute("userHandValue", "BUST!");
+//			session.setAttribute("stay", 5);
+//		}
+//		stay(session, gamestate);
+//		return new ModelAndView("redirect:/game");
+//	}
 
 	@RequestMapping("/surrender")
 	public ModelAndView surrender(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
