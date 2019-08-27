@@ -18,20 +18,24 @@
 	<c:if test="${ not empty message }">
 		<p class="message">${ message }</p>
 	</c:if>
+	<div class="container">
 	
 	<form action="/login-confirmation" method="post" autocomplete="off" >
 	
 	<p>
-		<strong><label>Name</label></strong> <input type="name" name="name" required />
+		<strong><label>Name</label></strong>
+	</p>
+	<p>
+		<input type="text" placeholder="Enter name" name="name" required>
 	</p>
 	
 	
 	<p>
 		<button type="submit">Submit</button>
 	</p>
-	
-	
+		
 	</form>
+	</div>
 
 
 <!--  <a href="/game?id=${ deck.id }"><button>Play!</button></a> -->
