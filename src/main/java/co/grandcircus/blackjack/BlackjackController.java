@@ -51,8 +51,10 @@ public class BlackjackController {
 		session.setAttribute("gamestate", gamestate);
 		User user = userDao.findById(i).get();
 		ModelAndView m = new ModelAndView("game");
+		m.addObject("users", gamestate.getUsers());
 		m.addObject("user", user);
 		m.addObject("deck", gamestate.getDeck());
+		m.addObject("gamestate", gamestate);
 		return m;
 	}
 

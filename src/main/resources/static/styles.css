@@ -33,6 +33,7 @@ button {
 }
 #playerHand {
 	margin-top: 25px;
+	display:inline-block;
 }
 
 img {
@@ -40,6 +41,9 @@ img {
 	height: auto;
 }
 
+td{
+	width: 75px;
+}
 th{
 	width: 75px;
 }

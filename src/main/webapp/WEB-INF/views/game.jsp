@@ -82,23 +82,37 @@
 			
 		</div>
 		<div class="inside">
+<<<<<<< Updated upstream
 		<c:forEach var="user" items="${ gamestate.getUsers() }">
 			<table id="playerHand">
 				<thead>
 					<tr>
 						<c:forEach var="each" items="${user.getHands().get(0).getCards()}">
 							<th><img src="${each.image }" /></th>
-						</c:forEach>
-
-					</tr>
-				</thead>
-				<tbody>
+=======
+		<c:forEach var="hand" items="${users}">
+		<table id="playerHand">
+			<thead>
+				<tr>
+					<th>${hand.name}</th>
+				</tr>
+				<tr>
+					<th>Bank:</th><th>${hand.bankroll}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="each" items="${hand.hands}">
 					<tr>
-						<c:forEach var="value" items="${ gamestate.getHandValues() }">
-						<td>Value: ${ value }</td>
+						<c:forEach var="card" items="${each.cards}">
+							<td><img src="${card.image }" /></td>
+>>>>>>> Stashed changes
 						</c:forEach>
 					</tr>
-				</tbody>
+					<tr>
+						<td>Value: ${each.handValue}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 			</table>
 			</c:forEach>
 			<c:if test="${stay == 1||stay == 2||stay == 3}">
@@ -114,9 +128,6 @@
 			<c:if test="${stay == 1||stay == 2||stay == 3||stay == 4}">
 			<a href="/stay"><button onClick="flipCard()">Stay</button></a>
 			</c:if>
-			<c:forEach var="user" items="${gamestate.getUsers() }">
-			<p>Bankroll: $${ user.bankroll }</p>
-			</c:forEach>
 		</div>
 	</div>
 	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
