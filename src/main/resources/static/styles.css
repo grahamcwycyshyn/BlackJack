@@ -56,3 +56,8 @@ body {
 .lastfive {
 	width: 75px;
 }
+
+#winLeader {
+	right: 0;
+	position: absolute;
+}
