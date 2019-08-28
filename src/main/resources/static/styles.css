@@ -34,11 +34,12 @@ button {
 #playerHand {
 	margin-top: 25px;
 	display:inline-block;
+	margin-right: 50px;
 }
 
 img {
-	width: 100%;
-	height: auto;
+	width: auto;
+	height: 100px;
 }
 
 td{
