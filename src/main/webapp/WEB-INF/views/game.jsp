@@ -119,6 +119,12 @@
 			<c:if test="${stay == 1||stay == 2||stay == 3||stay == 4}">
 			<a href="/stay"><button onClick="flipCard()">Stay</button></a>
 			</c:if>
+			<a href="/hitTop"><button>Hit Top</button></a>
+			<a href="/hitBottom"><button>Hit Bottom</button></a>
+			<a href="/doubleTop"><button>Double Top</button></a>
+			<a href="/doubleBottom"><button>Double Bottom</button></a>
+			<a href="/surrenderTop"><button>Surrender Top</button></a>
+			<a href="/surrenderBottom"><button>Surrender Bottom</button></a>
 		</div>
 	</div>
 	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
