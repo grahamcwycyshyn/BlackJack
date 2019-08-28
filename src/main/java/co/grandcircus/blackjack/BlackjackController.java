@@ -81,9 +81,10 @@ public class BlackjackController {
 
 	@RequestMapping("/join")
 	public ModelAndView join(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate,
-			User user) {
+			User user, @RequestParam(name="name") String name) {
 		Long id = user.getId();
 		// User user = userDao.findById(id).get();
+		user.setName(name);
 		user.setBankroll((long) 500);
 		user.setWins((int) 0);
 		user.setLosses((int) 0);
