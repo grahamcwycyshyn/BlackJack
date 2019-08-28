@@ -190,8 +190,10 @@ public class BlackjackController {
 			if (users.get(i).getHands().get(0).getCards().get(0).getValue()
 					.equalsIgnoreCase(users.get(i).getHands().get(0).getCards().get(1).getValue())) {
 				session.setAttribute("stay", 3);
+			} else if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
+				session.setAttribute("stay", 3);
 			} else {
-				session.setAttribute("stay", 2);
+				session.setAttribute("stay", 3);
 			}
 		}
 		return new ModelAndView("redirect:/game");
@@ -340,7 +342,7 @@ public class BlackjackController {
 //		stay(session, gamestate);
 //		return new ModelAndView("redirect:/game");
 //	}
-//=======
+
 	@RequestMapping("/double")
 	public ModelAndView doubleDown(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
 		if (gamestate.getDeck().getRemaining() <= 12) {
@@ -349,10 +351,11 @@ public class BlackjackController {
 			gamestate.setDeck(deck);
 			session.setAttribute("gamestate", gamestate);
 		}
+		
 		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards().add(a.getCard(gamestate.getDeck().getId()));
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).setHandValue(getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()));
 //		this line is not needed but kept just in case
 //		gamestate.getHandValues().set(gamestate.getHandIndex(), getHandValue(gamestate.getHands().get(gamestate.getHandIndex())));
-		session.setAttribute("gamestate", gamestate);
 //		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
 		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
 		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * 2);
@@ -378,7 +381,6 @@ public class BlackjackController {
 		stay(session, gamestate);
 		return new ModelAndView("redirect:/game");
 	}
-//>>>>>>> Stashed changes
 
 	@RequestMapping("/surrender")
 	public ModelAndView surrender(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
@@ -396,19 +398,29 @@ public class BlackjackController {
 		return new ModelAndView("redirect:/game");
 	}
 
-//	@RequestMapping("/split")
-//	public ModelAndView split(HttpSession session,
-//			@SessionAttribute(name="userHand") List<Card> userHand,
-//			@SessionAttribute(name="deck") Deck deck) {
-//		List<Card> newUserHand = new ArrayList<>();
-//		newUserHand.add(userHand.get(0));
-//		newUserHand.add(a.getCard(deck.getId()));
-//		session.setAttribute("userHand", newUserHand);
-//		List<Card> splitUserHand = new ArrayList<>();
-//		splitUserHand.add(userHand.get(1));
-//		splitUserHand.add(a.getCard(deck.getId()));
-//		session.setAttribute("splitUserHand", splitUserHand);
-//	}
+	@RequestMapping("/split")
+	public ModelAndView split(HttpSession session,
+			@SessionAttribute(name="gamestate") GameState gamestate) {
+		List<Card> newUserHand = new ArrayList<>();
+		Hand hand = new Hand();
+		//this line gets the first card of the user's first and only hand 
+		newUserHand.add(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards().get(1));
+		newUserHand.add(a.getCard(gamestate.getDeck().getId()));
+		hand.setCards(newUserHand);
+		hand.setHandValue(getHandValue(hand.getCards()));
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().add(hand);
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards().set(1, a.getCard(gamestate.getDeck().getId()));
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).setHandValue(getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()));
+		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * 2);
+		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
+		User user = userDao.findById(id).get();
+		user.setBankroll(user.getBankroll() - oldBet);
+		userDao.save(user);
+		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
+		session.setAttribute("gamestate", gamestate);
+		return new ModelAndView("redirect:/game");
+	}
 
 	@RequestMapping("/instructions")
 	public ModelAndView viewInstructions() {
