@@ -9,4 +9,5 @@ import co.grandcircus.blackjack.entity.Hand;
 public interface HandRepository extends JpaRepository<Hand, Long> {
 	List<Hand> findFirst5ByUserIdOrderByHandId(Long id);
 	List<Hand> findFirst5ByUserIdOrderByHandIdDesc(Long id);
+	List<Hand> findTopByUserIdOrderByHandIdDesc(Long id);
 }

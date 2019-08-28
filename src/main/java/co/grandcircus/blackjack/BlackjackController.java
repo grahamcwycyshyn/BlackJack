@@ -218,14 +218,14 @@ public class BlackjackController {
 //		gamestate.setHands(hands);
 //		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
 		session.setAttribute("gamestate", gamestate);
+		User user = gamestate.getUsers().get(gamestate.getUserIndex());
 		if (bust(userHand.getCards()) == true || getHandValue(userHand.getCards()) == 21) {
-			gamestate.setUserIndex(gamestate.getUserIndex()-1);
 			stay(session, gamestate);
 //		if (bust(userHand.getCards()) == true) {
 //			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);
 ////			user.setLosses(user.getLosses() + 1);
-//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
 //			user.setBankroll((user.getBankroll() - gamestate.getBets().get(i)));
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
 //			userDao.save(user);
 		}
 		 
@@ -247,6 +247,9 @@ public class BlackjackController {
 		
 		if (gamestate.getUserIndex() == 0) {
 			session.setAttribute("stay", 5);
+			for(int j = 0; j < gamestate.getUsers().get(gamestate.getUserIndex()).getHands().size(); j++) {
+				saveToDB(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(j).getCards(), gamestate.getUsers().get(gamestate.getUserIndex()));
+			}
 			gamestate.setUserIndex(gamestate.getUsers().size() - 1);
 			while (dealerHit(gamestate.getDealerHand()) == true) {
 				gamestate.getDealerHand().add(a.getCard(gamestate.getDeck().getId()));
@@ -284,6 +287,10 @@ public class BlackjackController {
 				}
 			}
 		} else {
+			User user = gamestate.getUsers().get(gamestate.getUserIndex());
+			for(int i = 0; i < user.getHands().size(); i++) {
+				saveToDB(user.getHands().get(i).getCards(), user);
+			}
 			gamestate.setUserIndex(gamestate.getUserIndex()-1);
 			session.setAttribute("gamestate", gamestate);
 		}
@@ -428,19 +435,27 @@ public class BlackjackController {
 
 	@RequestMapping("/lastHands")
 	public ModelAndView lastfive(HttpSession session,
-			@SessionAttribute(name = "user", required = false) User sessionUser) {
+			@SessionAttribute(name = "gamestate", required = false) GameState gamestate) {
 		ModelAndView mv = new ModelAndView("lastfive");
-		Long id = sessionUser.getId();// grabs user id from the session
+		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();// grabs user id from the session
 		List<Card> hand1 = handToCardList(getLastHand5(id));// creates the list of cards of the most recent hand
 		mv.addObject("hand1", hand1);// adds it to the model and view
 		List<Card> hand2 = handToCardList(getLastHand4(id));
-		mv.addObject("hand2", hand2);
+		if(hand2 != null) {
+			mv.addObject("hand2", hand2);			
+		}
 		List<Card> hand3 = handToCardList(getLastHand3(id));
-		mv.addObject("hand3", hand3);
+		if(hand3 != null) {			
+			mv.addObject("hand3", hand3);
+		}
 		List<Card> hand4 = handToCardList(getLastHand2(id));
-		mv.addObject("hand4", hand4);
+		if(hand4 != null) {
+			mv.addObject("hand4", hand4);
+		}
 		List<Card> hand5 = handToCardList(getLastHand1(id));
-		mv.addObject("hand5", hand5);
+		if(hand5 != null) {
+			mv.addObject("hand5", hand5);
+		}
 		return mv;
 	}
 
@@ -455,6 +470,9 @@ public class BlackjackController {
 
 	public List<Card> handToCardList(Hand hand) {
 		List<Card> testHand = new ArrayList<>();
+		if(hand == null) {
+			return null;
+		}
 		String str = hand.getHand();// turns hand into a single string
 //		after pulling hand from db
 		str = (str.substring(1, str.length() - 1));// removes square brackets
@@ -473,28 +491,49 @@ public class BlackjackController {
 	}
 
 	public Hand getLastHand5(Long id) {
-		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);// grabs the last 5 hands from table
-		return hands.get(0);// returns the most recent hand
+		List<Hand> hands = handDao.findTopByUserIdOrderByHandIdDesc(id);// grabs the last 5 hands from table
+		if(hands.size() > 0) {
+			return hands.get(0);// returns the most recent hand
+		} else {
+			return null;
+		}
 	}
 
 	public Hand getLastHand4(Long id) {
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
-		return hands.get(1);// returns second most recent hand
+		if(hands.size() > 1) {
+			return hands.get(1);// returns second most recent hand
+		} else {
+			return null;
+		}
+		
 	}
 
 	public Hand getLastHand3(Long id) {
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
-		return hands.get(2);
+		if(hands.size() > 2) {
+			return hands.get(2);// returns second most recent hand
+		} else {
+			return null;
+		}
 	}
 
 	public Hand getLastHand2(Long id) {
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
-		return hands.get(3);
+		if(hands.size() > 3) {
+			return hands.get(3);// returns second most recent hand
+		} else {
+			return null;
+		}
 	}
 
 	public Hand getLastHand1(Long id) {
 		List<Hand> hands = handDao.findFirst5ByUserIdOrderByHandIdDesc(id);
-		return hands.get(4);
+		if(hands.size() > 4) {
+			return hands.get(4);// returns second most recent hand
+		} else {
+			return null;
+		}
 	}
 
 //	@RequestMapping("/lastHands")
