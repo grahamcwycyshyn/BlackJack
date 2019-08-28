@@ -216,19 +216,13 @@ public class BlackjackController {
 		Hand userHand = userHands.get(0);// get is set to zero because there is only one hand
 		userHand.getCards().add(a.getCard(gamestate.getDeck().getId()));
 		userHand.setHandValue(getHandValue(userHand.getCards()));
-		userHands.set(0, userHand);// 0 brecause there is only one hand
+		userHands.set(0, userHand);
 		users.get(gamestate.getUserIndex()).setHands(userHands);
-		;
 		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().set(0, userHand);
-//		List<List<Card>> hands = new ArrayList<>();
-//		hands.add(userHand);
-//		gamestate.setHands(hands);
-//		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
 		session.setAttribute("gamestate", gamestate);
 		User user = gamestate.getUsers().get(gamestate.getUserIndex());
 		if (bust(userHand.getCards()) == true || getHandValue(userHand.getCards()) == 21) {
 			stay(session, gamestate);
-				
 			}
 			
 		if (bust(userHand.getCards()) == true) {
@@ -255,6 +249,63 @@ public class BlackjackController {
 //		} else {
 //			session.setAttribute("stay", 5);
 //		}
+		
+		return new ModelAndView("redirect:/game");
+	}
+	
+	@RequestMapping("/hitTop")
+	public ModelAndView hitTop(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
+			@SessionAttribute(name="doubleState") boolean[] doubleState) {
+		if (gamestate.getDeck().getRemaining() <= 12) {
+			Deck deck = gamestate.getDeck();
+			a.shuffle(deck);
+			gamestate.setDeck(deck);
+			session.setAttribute("gamestate", gamestate);
+		}
+		List<User> users = gamestate.getUsers();
+		List<Hand> userHands = users.get(gamestate.getUserIndex()).getHands();
+		Hand userHand = userHands.get(0);// get is set to zero because there is only one hand
+		userHand.getCards().add(a.getCard(gamestate.getDeck().getId()));
+		userHand.setHandValue(getHandValue(userHand.getCards()));
+		users.get(gamestate.getUserIndex()).getHands().set(0, userHand);
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().set(0, userHand);
+		session.setAttribute("doubleState", doubleState);
+		session.setAttribute("gamestate", gamestate);
+		if((bust(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()) == true) 
+				|| (getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()) == 21)) {
+			doubleState[0] = true;
+		}
+		if(doubleState[0] == true && doubleState[1] == true) {
+			stay(session, gamestate);
+		}
+		return new ModelAndView("redirect:/game");
+	}
+	
+	@RequestMapping("/hitBottom")
+	public ModelAndView hitBottom(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
+			@SessionAttribute(name="doubleState") boolean[] doubleState) {
+		if (gamestate.getDeck().getRemaining() <= 12) {
+			Deck deck = gamestate.getDeck();
+			a.shuffle(deck);
+			gamestate.setDeck(deck);
+			session.setAttribute("gamestate", gamestate);
+		}
+		List<User> users = gamestate.getUsers();
+		List<Hand> userHands = users.get(gamestate.getUserIndex()).getHands();
+		Hand userHand = userHands.get(1);// get is set to zero because there is only one hand
+		userHand.getCards().add(a.getCard(gamestate.getDeck().getId()));
+		userHand.setHandValue(getHandValue(userHand.getCards()));
+		users.get(gamestate.getUserIndex()).getHands().set(1, userHand);
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().set(1, userHand);
+		session.setAttribute("doubleState", doubleState);
+		session.setAttribute("gamestate", gamestate);
+		if((bust(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).getCards()) == true) 
+				|| (getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).getCards()) == 21)) {
+			doubleState[1] = true;
+		}
+		if(doubleState[0] == true && doubleState[1] == true) {
+			stay(session, gamestate);
+		}
 		return new ModelAndView("redirect:/game");
 	}
 
@@ -365,7 +416,7 @@ public class BlackjackController {
 			gamestate.setDeck(deck);
 			session.setAttribute("gamestate", gamestate);
 		}
-
+		
 		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()
 				.add(a.getCard(gamestate.getDeck().getId()));
 		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).setHandValue(
@@ -391,6 +442,64 @@ public class BlackjackController {
 		stay(session, gamestate);
 		return new ModelAndView("redirect:/game");
 	}
+	
+	@RequestMapping("/doubleTop")
+	public ModelAndView doubleTop(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
+			@SessionAttribute(name="doubleState") boolean[] doubleState) {
+		if (gamestate.getDeck().getRemaining() <= 12) {
+			Deck deck = gamestate.getDeck();
+			a.shuffle(deck);
+			gamestate.setDeck(deck);
+			session.setAttribute("gamestate", gamestate);
+		}
+		doubleState[0] = true;
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()
+			.add(a.getCard(gamestate.getDeck().getId()));
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).setHandValue(
+				getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()));
+		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * 2);
+		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
+		User user = userDao.findById(id).get();
+		user.setBankroll(user.getBankroll() - oldBet);
+		userDao.save(user);
+		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
+		session.setAttribute("doubleState", doubleState);
+		session.setAttribute("gamestate", gamestate);
+		if(doubleState[0] == true && doubleState[1] == true) {
+			stay(session, gamestate);
+		}
+		return new ModelAndView("redirect:/game");
+	}
+	
+	@RequestMapping("/doubleBottom")
+	public ModelAndView doubleBottom(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
+			@SessionAttribute(name="doubleState") boolean[] doubleState) {
+		if (gamestate.getDeck().getRemaining() <= 12) {
+			Deck deck = gamestate.getDeck();
+			a.shuffle(deck);
+			gamestate.setDeck(deck);
+			session.setAttribute("gamestate", gamestate);
+		}
+		doubleState[1] = true;
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).getCards()
+			.add(a.getCard(gamestate.getDeck().getId()));
+		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).setHandValue(
+				getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).getCards()));
+		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * 2);
+		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
+		User user = userDao.findById(id).get();
+		user.setBankroll(user.getBankroll() - oldBet);
+		userDao.save(user);
+		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
+		session.setAttribute("doubleState", doubleState);
+		session.setAttribute("gamestate", gamestate);
+		if(doubleState[0] == true && doubleState[1] == true) {
+			stay(session, gamestate);
+		}
+		return new ModelAndView("redirect:/game");
+	}
 
 	@RequestMapping("/surrender")
 	public ModelAndView surrender(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
@@ -407,9 +516,51 @@ public class BlackjackController {
 		stay(session, gamestate);
 		return new ModelAndView("redirect:/game");
 	}
+	
+	@RequestMapping("/surrenderTop")
+	public ModelAndView surrenderTop(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
+			@SessionAttribute(name="doubleState") boolean[] doubleState) {
+		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * (3 / 4));
+		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
+		User user = userDao.findById(id).get();
+		user.setBankroll(user.getBankroll() + oldBet * (1 / 4));
+		user.setLosses(user.getLosses() + 1);
+		userDao.save(user);
+		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
+		doubleState[0] = true;
+		session.setAttribute("doubleState", doubleState);
+		session.setAttribute("gamestate", gamestate);
+		if(doubleState[0] == true && doubleState[1] == true) {
+			stay(session, gamestate);
+		}
+		return new ModelAndView("redirect:/game");
+	}
+	
+	@RequestMapping("/surrenderBottom")
+	public ModelAndView surrenderBottom(HttpSession session, @SessionAttribute(name="gamestate") GameState gamestate,
+			@SessionAttribute(name="doubleState") boolean[] doubleState) {
+		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * (3 / 4));
+		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
+		User user = userDao.findById(id).get();
+		user.setBankroll(user.getBankroll() + oldBet * (1 / 4));
+		user.setLosses(user.getLosses() + 1);
+		userDao.save(user);
+		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
+		doubleState[1] = true;
+		session.setAttribute("doubleState", doubleState);
+		session.setAttribute("gamestate", gamestate);
+		if(doubleState[0] == true && doubleState[1] == true) {
+			stay(session, gamestate);
+		}
+		return new ModelAndView("redirect:/game");
+	}
 
 	@RequestMapping("/split")
 	public ModelAndView split(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
+		boolean[] doubleState = {false, false};
+		session.setAttribute("doubleState", doubleState);
 		List<Card> newUserHand = new ArrayList<>();
 		Hand hand = new Hand();
 		// this line gets the first card of the user's first and only hand
