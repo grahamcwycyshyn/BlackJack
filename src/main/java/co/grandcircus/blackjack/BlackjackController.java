@@ -1,11 +1,15 @@
 package co.grandcircus.blackjack;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -223,12 +227,23 @@ public class BlackjackController {
 		User user = gamestate.getUsers().get(gamestate.getUserIndex());
 		if (bust(userHand.getCards()) == true || getHandValue(userHand.getCards()) == 21) {
 			stay(session, gamestate);
-//		if (bust(userHand.getCards()) == true) {
-//			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);
-////			user.setLosses(user.getLosses() + 1);
-//			user.setBankroll((user.getBankroll() - gamestate.getBets().get(i)));
-//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
-//			userDao.save(user);
+				
+			}
+			
+		if (bust(userHand.getCards()) == true) {
+			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);
+			user.setLosses(user.getLosses() + 1);
+			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+			user.setBankroll((user.getBankroll() - gamestate.getBets().get(0)));
+			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+			userDao.save(user);
+		}
+		
+		if ( getHandValue(userHand.getCards()) == 21) {
+			user.setWins(user.getWins() + 1);
+			user.setBankroll((user.getBankroll() + gamestate.getBets().get(0)));
+			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+			userDao.save(user);
 		}
 		 
 		
@@ -435,13 +450,16 @@ public class BlackjackController {
 		return m;
 	}
 	
-	@RequestMapping("/winLeader")
+	
+	@RequestMapping("/leaderBoard")
 	public ModelAndView winleader(@RequestParam ("id") Long id) {
-		List<User> winuser = new ArrayList<>();
-		ModelAndView mv = new ModelAndView("winsLeaderBoard");
-		mv.addObject("name", winuser);
-		mv.addObject("win", winuser);
-		mv.addObject("losses", winuser);
+		List<User> mostWins = userDao.findFirst10OrderByWins(id);
+		
+		ModelAndView mv = new ModelAndView("leaderboard");
+		mv.addObject("name", mostWins);
+		mv.addObject("handsWon", mostWins);
+		mv.addObject("winPercentage", mostWins);
+		System.out.println(mostWins);  //TEST - REMOVE
 		return mv;
 	}
 

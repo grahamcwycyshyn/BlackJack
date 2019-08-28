@@ -123,6 +123,9 @@
 	</div>
 	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
 	<form action="/join" method="post" ><input type="text" placeholder="Enter name" name="name" required autofocus><a href="/join"><button type="submit">Join</button></a></form>
+
+	<!--   <a href="/leaderBoard"><button type="button" class="btn btn-primary">Leader Board</button></a>-->
+
 	
 </body>
 </html>
