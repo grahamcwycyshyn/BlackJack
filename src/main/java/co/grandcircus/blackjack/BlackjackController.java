@@ -458,10 +458,10 @@ public class BlackjackController {
 		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).setHandValue(
 				getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()));
 		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
-		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * 2);
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * (3/2));
 		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
 		User user = userDao.findById(id).get();
-		user.setBankroll(user.getBankroll() - oldBet);
+		user.setBankroll(user.getBankroll() - (oldBet/2));
 		userDao.save(user);
 		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
 		session.setAttribute("doubleState", doubleState);
@@ -487,10 +487,10 @@ public class BlackjackController {
 		gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).setHandValue(
 				getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(1).getCards()));
 		Integer oldBet = gamestate.getBets().get(gamestate.getUserIndex());
-		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * 2);
+		gamestate.getBets().set(gamestate.getUserIndex(), oldBet * (3/2));
 		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
 		User user = userDao.findById(id).get();
-		user.setBankroll(user.getBankroll() - oldBet);
+		user.setBankroll(user.getBankroll() - (oldBet/2));
 		userDao.save(user);
 		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
 		session.setAttribute("doubleState", doubleState);
