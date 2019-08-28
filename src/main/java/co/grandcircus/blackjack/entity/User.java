@@ -24,6 +24,7 @@ public class User implements Serializable{
 	private Long highestPayout;
 	private Double winLoss;
 	transient List<Hand> hands;
+	transient int userIndex;
 	
 	
 	public List<Hand> getHands() {
@@ -31,6 +32,12 @@ public class User implements Serializable{
 	}
 	public void setHands(List<Hand> hands) {
 		this.hands = hands;
+	}
+	public int getUserIndex() {
+		return userIndex;
+	}
+	public void setUserIndex(int userIndex) {
+		this.userIndex = userIndex;
 	}
 	public void setWinLoss(Double winLoss) {
 		this.winLoss = winLoss;

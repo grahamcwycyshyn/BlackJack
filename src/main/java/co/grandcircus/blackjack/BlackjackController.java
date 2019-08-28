@@ -66,6 +66,7 @@ public class BlackjackController {
 		user.setLosses((int) 0);
 		user.setWinLoss((double) 0);
 		userDao.save(user);
+		user.setUserIndex(0);
 		List<User> users = new ArrayList<>();
 		users.add(user);
 //		gamestate.getTurn().set(0, false);
@@ -88,6 +89,7 @@ public class BlackjackController {
 		user.setBankroll((long) 500);
 		user.setWins((int) 0);
 		user.setLosses((int) 0);
+		user.setUserIndex(gamestate.getUserIndex() + 1);
 		userDao.save(user);
 		gamestate.getUsers().add(user);
 		gamestate.getBets().add(5);
@@ -188,8 +190,6 @@ public class BlackjackController {
 			if (users.get(i).getHands().get(0).getCards().get(0).getValue()
 					.equalsIgnoreCase(users.get(i).getHands().get(0).getCards().get(1).getValue())) {
 				session.setAttribute("stay", 3);
-			} else if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
-				session.setAttribute("stay", 5);
 			} else {
 				session.setAttribute("stay", 2);
 			}
@@ -219,6 +219,7 @@ public class BlackjackController {
 //		session.setAttribute("userHandValue", getHandValue(gamestate.getHands().get(0)));
 		session.setAttribute("gamestate", gamestate);
 		if (bust(userHand.getCards()) == true || getHandValue(userHand.getCards()) == 21) {
+			gamestate.setUserIndex(gamestate.getUserIndex()-1);
 			stay(session, gamestate);
 //		if (bust(userHand.getCards()) == true) {
 //			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);

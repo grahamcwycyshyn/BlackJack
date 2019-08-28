@@ -86,7 +86,7 @@
 		<table id="playerHand">
 			<thead>
 				<tr>
-					<th>${hand.name}</th>
+					<th>${hand.name}</th><c:if test="${hand.userIndex == gamestate.userIndex}"><th><img src="http://www.freepngclipart.com/download/diamond/57419-blue-diamond-computer-file-png-file-hd.png" id="diamond"/></th></c:if>
 				</tr>
 				<tr>
 					<th>Bank:</th><th>${hand.bankroll}</th>
