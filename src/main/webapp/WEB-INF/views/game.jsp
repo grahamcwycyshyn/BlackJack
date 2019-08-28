@@ -82,14 +82,6 @@
 			
 		</div>
 		<div class="inside">
-<<<<<<< Updated upstream
-		<c:forEach var="user" items="${ gamestate.getUsers() }">
-			<table id="playerHand">
-				<thead>
-					<tr>
-						<c:forEach var="each" items="${user.getHands().get(0).getCards()}">
-							<th><img src="${each.image }" /></th>
-=======
 		<c:forEach var="hand" items="${users}">
 		<table id="playerHand">
 			<thead>
@@ -105,7 +97,6 @@
 					<tr>
 						<c:forEach var="card" items="${each.cards}">
 							<td><img src="${card.image }" /></td>
->>>>>>> Stashed changes
 						</c:forEach>
 					</tr>
 					<tr>
