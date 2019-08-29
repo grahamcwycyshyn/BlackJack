@@ -13,7 +13,21 @@ public class GameState implements Serializable{
 	private List<Integer> bets;
 	private List<Boolean> turn;
 	private Integer userIndex;
+	private Integer phase;
+	private Integer numUser;
 	
+	public Integer getNumUser() {
+		return numUser;
+	}
+	public void setNumUser(Integer numUser) {
+		this.numUser = numUser;
+	}
+	public Integer getPhase() {
+		return phase;
+	}
+	public void setPhase(Integer phase) {
+		this.phase = phase;
+	}
 	public List<Boolean> getTurn() {
 		return turn;
 	}
