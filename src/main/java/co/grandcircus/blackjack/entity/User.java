@@ -111,5 +111,18 @@ public class User implements Serializable, Comparator<User> {
 		// TODO Auto-generated method stub
 
 	}
+	
+	
+	public int compare2(User b1, User b2) {
+		if (b1.getBankroll() < b2.getBankroll()) {
+			return -1;
+		} else if (b1.getBankroll() > b2.getBankroll()) {
+			return 1;
+		} else {
+			return 0;
+		}
+		// TODO Auto-generated method stub
+
+	}
 
 }

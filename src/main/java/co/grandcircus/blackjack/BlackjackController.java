@@ -616,10 +616,14 @@ public class BlackjackController {
 	@RequestMapping("/leaderBoard")
 	public ModelAndView winleader() {
 		List<User> mostWins = userDao.findAll();
+		List<User> highBankroll = userDao.findAll();
 		Collections.sort(mostWins, new User());
 		Collections.reverse(mostWins);
+		Collections.sort(highBankroll, new User());
+		Collections.reverse(highBankroll);
 		ModelAndView mv = new ModelAndView("leaderboard");
 		mv.addObject("mostwins", mostWins);
+		mv.addObject("highBankroll", highBankroll);
         return mv;
 	}
 
