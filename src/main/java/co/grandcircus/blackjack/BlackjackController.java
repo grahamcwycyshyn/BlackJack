@@ -202,7 +202,7 @@ public class BlackjackController {
 //			session.setAttribute("stay", 0);
 			if (users.get(i).getHands().get(0).getCards().get(0).getValue()
 					.equalsIgnoreCase(users.get(i).getHands().get(0).getCards().get(1).getValue())) {
-				gamestate.setPhase(2);
+//				gamestate.setPhase(2);
 				session.setAttribute("gamestate", gamestate);
 			} else if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
 				session.setAttribute("stay", 3);
