@@ -21,10 +21,10 @@
 				<thead>
 					<tr>
 						<c:forEach items="${gamestate.getDealerHand()}" var="item" varStatus="loop">
-						    <c:if test="${loop.first && stay != 5}">
+						    <c:if test="${loop.first && gamestate.phase != 0}">
 						        <th><img class="backside" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSVhzvnISkrvxN3Mg7uFbwKSmzg-EzcfNjnKKb5Sf90Rm8U5vd" /></th>
 						    </c:if>
-						    <c:if test="${loop.first && stay == 5}">
+						    <c:if test="${loop.first && gamestate.phase == 0}">
 						        <th><img src="${item.image }" /></th>
 						    </c:if>
 						    <c:if test="${not loop.first}">
@@ -42,17 +42,17 @@
 <%-- 							<td>${each.value }</td> --%>
 <%-- 						</c:forEach> --%>
 						<c:forEach items="${dealerHand}" var="item" varStatus="loop">
-						    <c:if test="${loop.first && stay != 5}">
+						    <c:if test="${loop.first && gamestate.phase != 0}">
 						        <td></td>
 						    </c:if>
-						    <c:if test="${loop.first && stay == 5}">
+						    <c:if test="${loop.first && gamestate.phase == 0}">
 						        <td>${item.value }</td>
 						    </c:if>
 						    <c:if test="${not loop.first}">
 						        <td>${item.value }</td> 
 						    </c:if>
 						</c:forEach>
-						    <c:if test="${stay == 5}">
+						    <c:if test="${gamestate.phase == 0}">
 						        <td>${item.value }</td>
 						        <tr><td>Value: ${dealerHandValue}</td></tr>
 						    </c:if>
@@ -70,6 +70,7 @@
 			<button onclick="addFiveHundred()" id="addFiveHundred">$500</button>
 			<button onclick="addThousand()" id="addThousand">$1000</button>
 			<span class="betAmount" id="betAmount">$5</span>
+			<h2>Betting phase</h2>
 		</c:if>
 			<c:if test="${gamestate.phase == 0 && gamestate.userIndex == 0}">
 			<form action="/deal" id="betDeal">
