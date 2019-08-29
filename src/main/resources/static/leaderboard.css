@@ -1,11 +1,19 @@
 @charset "ISO-8859-1";
 
+body{
+	background: url("green_felt_background.jpg");
+	color: white;
+	font-weight: bold;
+}
+
 table{
 	text-transform: capitalize;
 	 text-align: center;
 	 display: inline-block;
 	 margin-right: 10%;
 	 margin-left:20%;
+	 font-weight: 900;
+	 
 }
 
 h1 {
@@ -14,14 +22,19 @@ h1 {
 a {
 	position: absolute;
 	left: 45%;
+
 	top: 80%;
+
+	font-weight: bold;
+
 }
 
 th {
-	border: solid black 1px;
+	border: solid white 2px;
 }
 
 td{
-	border: solid black 1px;
+	border: solid white 2px;
+	font-weight: bold;
 }
 

@@ -6,9 +6,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Leaderboard</title>
-<link href="/leaderboard.css" rel="stylesheet" />
+
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" />
+<link href="/leaderboard.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="conatiner">
