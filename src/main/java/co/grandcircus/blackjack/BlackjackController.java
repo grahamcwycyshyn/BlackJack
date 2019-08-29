@@ -122,9 +122,10 @@ public class BlackjackController {
 	public ModelAndView next(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate,
 			@RequestParam("betDeal") Integer bet) {
 		gamestate.getBets().set(gamestate.getUserIndex(), bet);
+		System.out.println(bet);
 //		gamestate.getBets().set(gamestate.getUsers().size() - gamestate.getUserIndex() -1, bet);
 		System.out.println(gamestate.getUserIndex());
-
+		System.out.println(gamestate.getBets().get(gamestate.getUserIndex()));
 //		Long id = gamestate.getUsers().get(gamestate.getUserIndex()).getId();
 //		User user = userDao.findById(id).get();
 //		user.setBankroll((user.getBankroll() - bet));
