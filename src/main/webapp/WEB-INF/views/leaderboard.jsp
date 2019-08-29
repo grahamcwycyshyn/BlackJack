@@ -6,6 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Leaderboard</title>
+<link href="/leaderboard.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="conatiner">
@@ -13,11 +14,23 @@
 		<table id="handsWon">
 			<thead>
 				<tr>
-					<th>Rank</th>
+				  	<th>Rank</th>
 					<th>Name</th>
 					<th>Hands Won</th>
+				  
 				</tr>
 			</thead>
+			<tbody>
+				<c:forEach items="${mostwins}" var="item" >
+					<tr>
+					<c:if test="${item.wins!=0 }">
+						<td>${item.id }></td>
+						<td>${item.name }</td>
+						<td>${item.wins }</td>
+				  </c:if>
+				</tr>
+				</c:forEach>
+			</tbody>
 		</table>
 
 		<table id="winPercentage">

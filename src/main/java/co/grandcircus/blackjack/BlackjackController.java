@@ -363,6 +363,7 @@ public class BlackjackController {
 							Long id = gamestate.getUsers().get(i).getId();
 							User user = userDao.findById(id).get();
 							user.setBankroll(user.getBankroll() + gamestate.getBets().get(i));
+							user.setLosses(user.getLosses() + 1);
 							userDao.save(user);
 							gamestate.getUsers().get(i).setBankroll(user.getBankroll());
 //						gamestate.getUsers().set(i, user);
@@ -447,7 +448,7 @@ public class BlackjackController {
 		session.setAttribute("gamestate", gamestate);
 		if (bust(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()) == false) {
 			session.setAttribute("stay", 4);
-
+						
 			if (getHandValue(gamestate.getUsers().get(gamestate.getUserIndex()).getHands().get(0).getCards()) == 21) {
 				session.setAttribute("stay", 4);
 			}
@@ -613,17 +614,14 @@ public class BlackjackController {
 	
 	
 	@RequestMapping("/leaderBoard")
-	public ModelAndView winleader(@RequestParam ("id") Long id) {
-		List<User> mostWins = userDao.findFirst10OrderByWins(id);
-		
+	public ModelAndView winleader() {
+		List<User> mostWins = userDao.findAll();
+		Collections.sort(mostWins, new User());
+		Collections.reverse(mostWins);
 		ModelAndView mv = new ModelAndView("leaderboard");
-		mv.addObject("name", mostWins);
-		mv.addObject("handsWon", mostWins);
-		mv.addObject("winPercentage", mostWins);
-		System.out.println(mostWins);  //TEST - REMOVE
+		mv.addObject("mostwins", mostWins);
         return mv;
 	}
-	
 
 	@RequestMapping("/lastHands")
 	public ModelAndView lastfive(HttpSession session,
