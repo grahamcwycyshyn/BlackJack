@@ -72,6 +72,31 @@
 			<span class="betAmount" id="betAmount">0</span>
 			<h2>Betting phase</h2>
 		</c:if>
+		<c:if test="${gamestate.phase == 1 || gamestate.phase == 2 || gamestate.phase == 3}">
+				<a href="/hit"><button>Hit</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 2}">
+				<a href="/split"><button>Split</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2}">
+				<a href="/double"><button onClick="flipCard()">Double</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2}"><a href="/surrender"><button>Surrender</button></a></c:if>
+			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2 || gamestate.phase == 3 || gamestate.phase == 4 || gamestate.phase == 5 || gamestate.phase == 6 || gamestate.phase == 7}">
+				<a href="/stay"><button onClick="flipCard()">Stay</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 5 || gamestate.phase == 7 }">
+				<a href="/hitTop"><button>Hit Top</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 5 || gamestate.phase == 6}">
+				<a href="/hitBottom"><button>Hit Bottom</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 5 || gamestate.phase == 6}">
+				<a href="/doubleTop"><button>Double Top</button></a>
+			</c:if>
+			<c:if test="${gamestate.phase == 5 || gamestate.phase == 7}">
+				<a href="/doubleBottom"><button>Double Bottom</button></a>
+			</c:if>
 			<c:if test="${gamestate.phase == 0 && gamestate.userIndex == 0}">
 			<form action="/deal" id="betDeal">
 				<input type="hidden" name="betDeal" value="0">
@@ -110,31 +135,7 @@
 			</tbody>
 			</table>
 			</c:forEach>
-			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2 || gamestate.phase == 3}">
-				<a href="/hit"><button>Hit</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 2}">
-				<a href="/split"><button>Split</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2}">
-				<a href="/double"><button onClick="flipCard()">Double</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2}"><a href="/surrender"><button>Surrender</button></a></c:if>
-			<c:if test="${gamestate.phase == 1 || gamestate.phase == 2 || gamestate.phase == 3 || gamestate.phase == 4 || gamestate.phase == 5 || gamestate.phase == 6 || gamestate.phase == 7}">
-				<a href="/stay"><button onClick="flipCard()">Stay</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 5 || gamestate.phase == 7 }">
-				<a href="/hitTop"><button>Hit Top</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 5 || gamestate.phase == 6}">
-				<a href="/hitBottom"><button>Hit Bottom</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 5 || gamestate.phase == 6}">
-				<a href="/doubleTop"><button>Double Top</button></a>
-			</c:if>
-			<c:if test="${gamestate.phase == 5 || gamestate.phase == 7}">
-				<a href="/doubleBottom"><button>Double Bottom</button></a>
-			</c:if>
+			
 <!-- 				<a href="/surrenderTop"><button>Surrender Top</button></a>
 				<a href="/surrenderBottom"><button>Surrender Bottom</button></a> -->
 		</div>
