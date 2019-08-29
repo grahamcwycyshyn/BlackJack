@@ -73,7 +73,7 @@
 				</tr>
 			</thead>
 		</table> -->
-
+<a href="/game"><button type="button" class="btn btn-primary">Back To Game</button></a>
 	</div>
 </body>
 </html>
