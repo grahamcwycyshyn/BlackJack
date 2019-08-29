@@ -54,7 +54,12 @@
 						</c:forEach>
 						    <c:if test="${gamestate.phase == 0}">
 						        <td>${item.value }</td>
-						        <tr><td>Value: ${dealerHandValue}</td></tr>
+						        
+						        <tr><td>Value: ${dealerHandValue}
+						        <c:if test="${ dealerHandValue > 21 }">
+						        	BUST!
+						        </c:if>
+						        </td></tr>
 						    </c:if>
 					</tr>
 				</tbody>
@@ -129,7 +134,12 @@
 						</c:forEach>
 					</tr>
 					<tr>
+					<c:if test="${ each.handValue < 22 }">
 						<td>Value: ${each.handValue}</td>
+					</c:if>
+					<c:if test="${ each.handValue >= 22 }">
+						<td>Value: ${each.handValue} BUST!</td>
+					</c:if>
 					</tr>
 				</c:forEach>
 			</tbody>
