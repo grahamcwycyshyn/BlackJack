@@ -539,7 +539,7 @@ public class BlackjackController {
 		user.setLosses(user.getLosses() + 1);
 		userDao.save(user);
 		gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
-//		gamestate.getUsers().set(0, user);
+		gamestate.getBets().set(gamestate.getUserIndex(), 0);
 		session.setAttribute("gamestate", gamestate);
 		stay(session, gamestate);
 		return new ModelAndView("redirect:/game");
