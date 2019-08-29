@@ -607,9 +607,10 @@ public class BlackjackController {
 	}
 
 	@RequestMapping("/instructions")
-	public ModelAndView viewInstructions() {
+	public ModelAndView viewInstructions(HttpSession session, @SessionAttribute(name = "gamestate") GameState gamestate) {
 		ModelAndView m = new ModelAndView("instructions");
-		return m;
+		gamestate.getUsers().get(0).getName();  //to return user's name after hitting back from Instructions page.
+			return m;
 	}
 
 	
