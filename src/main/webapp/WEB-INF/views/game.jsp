@@ -142,7 +142,10 @@
 	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
 	<c:if test="${gamestate.numUser != 5 }"><form action="/join" method="post" ><input type="text" placeholder="Enter name" name="name" required autofocus><a href="/join"><button type="submit">Join</button></a></form></c:if>
 
-	   <a href="/leaderBoard"><button type="button" class="btn btn-primary">Leader Board</button></a>
+	<c:if test="${gamestate.phase == 0 }">
+		<a href="/leaderBoard"><button type="button" class="btn btn-primary">Leader Board</button></a>
+	</c:if>
+
 
 	
 </body>

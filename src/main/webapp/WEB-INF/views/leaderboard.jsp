@@ -7,6 +7,8 @@
 <meta charset="ISO-8859-1">
 <title>Leaderboard</title>
 <link href="/leaderboard.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" />
 </head>
 <body>
 	<div class="conatiner">
@@ -21,10 +23,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${mostwins}" var="item" >
+				<c:forEach items="${mostwins}" begin="0" end="19" var="item" varStatus="loop" >
 					<tr>
 					<c:if test="${item.wins!=0 }">
-						<td>${item.id }></td>
+						<td>${loop.count }></td>
 						<td>${item.name }</td>
 						<td>${item.wins }</td>
 				  </c:if>
