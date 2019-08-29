@@ -3,54 +3,94 @@ let back = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSVhzvnISkrvxN
 let front = "${item.image}";
 let current = back;
 
-
 function addFive() {
 	let betDisplay = document.getElementById("betAmount");
 	betAmount += 5;
 	betDisplay.innerText = "$" + betAmount;
-//	let betForm = document.getElementById("betDeal");
-	let nextBetForm = document.getElementById("nextBet");
-//	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
-	nextBetForm.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	if (document.getElementById("betDeal") != null
+			&& typeof (document.getElementById("betDeal")) != 'undefined') {
+		let betForm = document.getElementById("betDeal");
+		betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
+	} else {
+		let nextBetForm = document.getElementById("nextBet");
+		nextBetForm.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	}
 }
 
 function addTwentyFive() {
 	let betDisplay = document.getElementById("betAmount");
 	betAmount += 25;
 	betDisplay.innerText = "$" + betAmount;
-	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
-	nextBet.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	if (document.getElementById("betDeal") != null
+			&& typeof (document.getElementById("betDeal")) != 'undefined') {
+		let betForm = document.getElementById("betDeal");
+		betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
+	} else {
+		let nextBetForm = document.getElementById("nextBet");
+		nextBetForm.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	}
 }
-
 
 function addHundred() {
 	let betDisplay = document.getElementById("betAmount");
 	betAmount += 100;
 	betDisplay.innerText = "$" + betAmount;
-	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
-	nextBet.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	if (document.getElementById("betDeal") != null
+			&& typeof (document.getElementById("betDeal")) != 'undefined') {
+		let betForm = document.getElementById("betDeal");
+		betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
+	} else {
+		let nextBetForm = document.getElementById("nextBet");
+		nextBetForm.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	}
 }
-
 
 function addFiveHundred() {
 	let betDisplay = document.getElementById("betAmount");
 	betAmount += 500;
 	betDisplay.innerText = "$" + betAmount;
-	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
-	nextBet.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	if (document.getElementById("betDeal") != null
+			&& typeof (document.getElementById("betDeal")) != 'undefined') {
+		let betForm = document.getElementById("betDeal");
+		betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
+	} else {
+		let nextBetForm = document.getElementById("nextBet");
+		nextBetForm.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	}
 }
-
 
 function addThousand() {
 	let betDisplay = document.getElementById("betAmount");
 	betAmount += 1000;
 	betDisplay.innerText = "$" + betAmount;
-	let betForm = document.getElementById("betDeal");
-	betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
-	nextBet.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\"" + betAmount + "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	if (document.getElementById("betDeal") != null
+			&& typeof (document.getElementById("betDeal")) != 'undefined') {
+		let betForm = document.getElementById("betDeal");
+		betDeal.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Deal</button>";
+	} else {
+		let nextBetForm = document.getElementById("nextBet");
+		nextBetForm.innerHTML = "<input type=\"hidden\" name=\"betDeal\" value=\""
+				+ betAmount
+				+ "\"> <button type=\"submit\" value=\"Submit\">Next</button>";
+	}
 }
 
 function flipCard() {
