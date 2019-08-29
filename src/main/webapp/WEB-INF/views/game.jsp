@@ -80,7 +80,7 @@
 			</c:if>
 			<c:if test="${gamestate.phase == 0 && gamestate.userIndex != 0 }">
 				<form action="/next" id="nextBet">
-					<input type="hidden" name="betDeal" value="5">
+					<input type="hidden" name="betDeal" value="0">
 					<button type="submit">Next</button>
 				</form>
 			</c:if>

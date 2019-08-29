@@ -178,22 +178,22 @@ public class BlackjackController {
 //				gamestate.getHands().set(i, list);
 //				gamestate.getHandValues().set(i, getHandValue(list));
 //			}
-			if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
-				Long id = gamestate.getUsers().get(i).getId();
-				User user = userDao.findById(id).get();
-				user.setBankroll((long) (user.getBankroll() + 1.5 * gamestate.getBets().get(i)));
-				user.setWins(user.getWins() + 1);
-				userDao.save(user);
-				gamestate.getUsers().get(i).setBankroll(user.getBankroll());
-//				stay(session, gamestate);
-			} else {
+//			if (getHandValue(users.get(i).getHands().get(0).getCards()) == 21) {
+//				Long id = gamestate.getUsers().get(i).getId();
+//				User user = userDao.findById(id).get();
+//				user.setBankroll((long) (user.getBankroll() + 1.5 * gamestate.getBets().get(i)));
+//				user.setWins(user.getWins() + 1);
+//				userDao.save(user);
+//				gamestate.getUsers().get(i).setBankroll(user.getBankroll());
+////				stay(session, gamestate);
+//			} else {
 				Long id = gamestate.getUsers().get(i).getId();
 				User user = userDao.findById(id).get();
 				user.setBankroll((user.getBankroll() - gamestate.getBets().get(i)));
 //				user.setLosses(user.getLosses() + 1);
 				userDao.save(user);
 				gamestate.getUsers().get(i).setBankroll(user.getBankroll());
-			}
+//			}
 //		List<List<Card>> hands = new ArrayList<>();
 //		hands.add(userHand);
 //		gamestate.setHands(hands);
@@ -337,7 +337,14 @@ public class BlackjackController {
 			session.setAttribute("dealerHandValue", getHandValue(gamestate.getDealerHand()));
 			for (int i = 0; i < gamestate.getUsers().size(); i++) {
 				if (gamestate.getUsers().get(i).getHands().size() == 1) {
-					if (bust(gamestate.getDealerHand()) == true
+					if (getHandValue(gamestate.getUsers().get(i).getHands().get(0).getCards()) == 21 && gamestate.getUsers().get(i).getHands().get(0).getCards().size() == 2) {
+						Long id = gamestate.getUsers().get(i).getId();
+						User user = userDao.findById(id).get();
+						user.setBankroll((long) (user.getBankroll() + 1.5 * gamestate.getBets().get(i)));
+						user.setWins(user.getWins() + 1);
+						userDao.save(user);
+						gamestate.getUsers().get(i).setBankroll(user.getBankroll());
+					}else if (bust(gamestate.getDealerHand()) == true
 							&& bust(gamestate.getUsers().get(i).getHands().get(0).getCards()) == false) {
 						Long id = gamestate.getUsers().get(i).getId();
 						User user = userDao.findById(id).get();
