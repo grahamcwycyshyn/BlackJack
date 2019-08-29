@@ -1,0 +1,17 @@
+@charset "ISO-8859-1";
+
+table{
+	text-transform: capitalize;
+	 text-align: center;
+	 display: inline-block;
+	 margin-right: 200px;
+}
+
+th {
+	border: solid black 1px;
+}
+
+td{
+	border: solid black 1px;
+}
+
