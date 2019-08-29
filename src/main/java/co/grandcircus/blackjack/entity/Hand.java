@@ -2,6 +2,7 @@ package co.grandcircus.blackjack.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class Hand {
 	private Long handId;
 	private Long userId;
 	private String value;
+	@Column(length = 900)
 	private String hand;
 	transient List<Card> cards;
 	transient int handValue;
