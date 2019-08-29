@@ -237,21 +237,21 @@ public class BlackjackController {
 			stay(session, gamestate);
 			}
 			
-		if (bust(userHand.getCards()) == true) {
-			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);
-			user.setLosses(user.getLosses() + 1);
-			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
-			user.setBankroll((user.getBankroll() - gamestate.getBets().get(0)));
-			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
-			userDao.save(user);
-		}
+//		if (bust(userHand.getCards()) == true) {
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setLosses(gamestate.getUserIndex() + 1);
+//			user.setLosses(user.getLosses() + 1);
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+//			user.setBankroll((user.getBankroll() - gamestate.getBets().get(0)));
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
+//			userDao.save(user);
+//		}
 		
-		if ( getHandValue(userHand.getCards()) == 21) {
-			user.setWins(user.getWins() + 1);
-			user.setBankroll((user.getBankroll() + gamestate.getBets().get(0)));
-			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());;
-			userDao.save(user);
-		}
+//		if ( getHandValue(userHand.getCards()) == 21) {
+//			user.setWins(user.getWins() + 1);
+//			user.setBankroll((user.getBankroll() + gamestate.getBets().get(0)));
+//			gamestate.getUsers().get(gamestate.getUserIndex()).setBankroll(user.getBankroll());
+//			userDao.save(user);
+//		}
 
 //			session.setAttribute("stay", 1);
 //		}
