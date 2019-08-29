@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="conatiner">
-
+		<h1>LeaderBoards</h1>
 		<table id="handsWon">
 			<thead>
 				<tr>
@@ -26,7 +26,7 @@
 				<c:forEach items="${mostwins}" begin="0" end="19" var="item" varStatus="loop" >
 					<tr>
 					<c:if test="${item.wins!=0 }">
-						<td>${loop.count }></td>
+						<td>${loop.count }</td>
 						<td>${item.name }</td>
 						<td>${item.wins }</td>
 				  </c:if>
@@ -35,7 +35,7 @@
 			</tbody>
 		</table>
 
-		<table id="winPercentage">
+<!-- 		<table id="winPercentage">
 			<thead>
 				<tr>
 					<th>Rank</th>
@@ -44,7 +44,7 @@
 				</tr>
 			</thead>
 		</table>
-
+ -->
 		<table id="mostMoney">
 			<thead>
 				<tr>
@@ -53,9 +53,18 @@
 					<th>Bankroll</th>
 				</tr>
 			</thead>
+			<tbody>
+			<c:forEach items="${mostBankroll}" begin="0" end="19" var="item" varStatus="loop" >
+			<tr>
+				<td>${loop.count }</td>
+				<td>${item.name }</td>
+				<td>${item.bankroll }</td>
+			</tr>
+			</c:forEach>
+			</tbody>
 		</table>
 		
-		<table id="highestPayout">
+<!-- 		<table id="highestPayout">
 			<thead>
 				<tr>
 					<th>Rank</th>
@@ -63,7 +72,7 @@
 					<th>Payout</th>
 				</tr>
 			</thead>
-		</table>
+		</table> -->
 
 	</div>
 </body>
