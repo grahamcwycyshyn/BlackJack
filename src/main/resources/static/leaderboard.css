@@ -5,6 +5,11 @@ table{
 	 text-align: center;
 	 display: inline-block;
 	 margin-right: 200px;
+	 margin-left:20%;
+}
+
+h1 {
+	text-align: center;
 }
 
 th {
