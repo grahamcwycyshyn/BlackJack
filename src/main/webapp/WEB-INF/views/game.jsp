@@ -69,12 +69,12 @@
 			<button onclick="addHundred()" id="addHundred">$100</button>
 			<button onclick="addFiveHundred()" id="addFiveHundred">$500</button>
 			<button onclick="addThousand()" id="addThousand">$1000</button>
-			<span class="betAmount" id="betAmount">$5</span>
+			<span class="betAmount" id="betAmount">0</span>
 			<h2>Betting phase</h2>
 		</c:if>
 			<c:if test="${gamestate.phase == 0 && gamestate.userIndex == 0}">
 			<form action="/deal" id="betDeal">
-				<input type="hidden" name="betDeal" value="5">
+				<input type="hidden" name="betDeal" value="0">
 				<button type="submit" value="Submit">Deal</button>
 			</form>
 			</c:if>
@@ -139,8 +139,9 @@
 				<a href="/surrenderBottom"><button>Surrender Bottom</button></a> -->
 		</div>
 	</div>
-	<a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a>
-	<c:if test="${gamestate.numUser != 5 }"><form action="/join" method="post" ><input type="text" placeholder="Enter name" name="name" required autofocus><a href="/join"><button type="submit">Join</button></a></form></c:if>
+	
+	<c:if test="${gamestate.phase == 0 }"><a href="/lastHands"><button type="button" class="btn btn-primary">Last 5 Hands</button></a></c:if>
+	<c:if test="${gamestate.numUser != 5 && gamestate.phase == 0}"><form action="/join" method="post" ><input type="text" placeholder="Enter name" name="name" required autofocus><a href="/join"><button type="submit">Join</button></a></form></c:if>
 
 	<c:if test="${gamestate.phase == 0 }">
 		<a href="/leaderBoard"><button type="button" class="btn btn-primary">Leader Board</button></a>

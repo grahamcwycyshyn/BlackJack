@@ -11,6 +11,10 @@ table{
 h1 {
 	text-align: center;
 }
+a {
+	position: absolute;
+	left: 45%;
+}
 
 th {
 	border: solid black 1px;
